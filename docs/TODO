@@ -1,2 +1,4 @@
+* finish page permission and login required support
+* add etag and last_modified support for page view
 * documentation
 
