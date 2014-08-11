@@ -1,0 +1,40 @@
+{% extends "admin/guardian/model/change_form.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript">
+        django.jQuery(document).ready(function () {
+
+            // Only for stacked inlines
+            django.jQuery('div.inline-group div.inline-related:not(.tabular)').each(function () {
+                fs = django.jQuery(this).find('fieldset');
+                h3 = django.jQuery(this).find('h3:first');
+
+                // Check existed items
+                var existed = h3.find('span.delete').length;
+
+                // Don't collapse if fieldset contains errors
+                if (fs.find('div').hasClass('errors') || !existed)
+                    fs.addClass('stacked_collapse');
+                else
+                    fs.addClass('stacked_collapse collapsed');
+
+                // Add toggle link
+                h3.prepend('<a class="stacked_collapse-toggle" href="#">(' + gettext('Show') + ')</a> ');
+                h3.find('a.stacked_collapse-toggle').bind("click", function () {
+                    fs = django.jQuery(this).parent('h3').next('fieldset');
+                    if (!fs.hasClass('collapsed')) {
+                        fs.addClass('collapsed');
+                        django.jQuery(this).html('(' + gettext('Show') + ')');
+                    }
+                    else {
+                        fs.removeClass('collapsed');
+                        django.jQuery(this).html('(' + gettext('Hide') + ')');
+                    }
+                }).removeAttr('href').css('cursor', 'pointer');
+            });
+
+        });
+    </script>
+{% endblock %}

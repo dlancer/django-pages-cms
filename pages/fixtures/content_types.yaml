@@ -1,0 +1,42 @@
+- model: pages.pagecontenttype
+  pk: 1
+  fields:
+    type: slug
+    class_name: PageSlugContent
+    admin_class_name: PageSlugContentInline
+
+- model: pages.pagecontenttype
+  pk: 2
+  fields:
+    type: redirect
+    class_name: PageRedirectContent
+    admin_class_name: PageRedirectContentInline
+
+- model: pages.pagecontenttype
+  pk: 3
+  fields:
+    type: meta
+    class_name: PageMetaContent
+    admin_class_name: PageMetaContentInline
+
+- model: pages.pagecontenttype
+  pk: 4
+  fields:
+    type: text
+    class_name: PageTextContent
+    admin_class_name: PageTextContentInline
+
+- model: pages.pagecontenttype
+  pk: 5
+  fields:
+    type: markdown
+    class_name: PageMarkdownContent
+    admin_class_name: PageMarkdownContentInline
+
+- model: pages.pagecontenttype
+  pk: 6
+  fields:
+    type: image
+    class_name: PageImageContent
+    admin_class_name: PageImageContentInline
+
