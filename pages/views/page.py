@@ -17,13 +17,14 @@ from django.core.exceptions import PermissionDenied
 
 from guardian.shortcuts import get_perms
 
+from appcore.views.mixins import DecoratorChainingMixin
+
 from pages.conf import settings
 from pages.cache import cache
 from pages.models import Page
 from pages.models import PageContentType
 from pages.models import PageSlugContent
 from pages.models import PageRedirectContent
-from pages.mixins import DecoratorChainingMixin
 
 
 def get_timestamp(slug, language):
