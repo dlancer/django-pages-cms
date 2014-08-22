@@ -3,7 +3,6 @@
 from datetime import datetime
 from hashlib import md5
 
-from django.core.cache import cache
 from django.http import HttpResponseForbidden, Http404
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.views.generic import TemplateView
@@ -82,7 +81,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
 
             # check user view permission
             if page.is_permission_required:
-                if not 'view_page' in get_perms(request.user, page):
+                if 'view_page' not in get_perms(request.user, page):
                     if settings.PAGES_RAISE_403:
                         raise PermissionDenied
                     if settings.PAGES_RENDER_403:
@@ -120,7 +119,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
 
                 # check user view permission
                 if page.is_permission_required:
-                    if not 'view_page' in get_perms(request.user, page):
+                    if 'view_page' not in get_perms(request.user, page):
                         if settings.PAGES_RAISE_403:
                             raise PermissionDenied
                         if settings.PAGES_RENDER_403:

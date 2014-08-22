@@ -203,4 +203,3 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
         obj.save()
 
 admin.site.register(Page, PageAdmin)
-

@@ -11,7 +11,6 @@ from pages.models import Page
 from pages.models.pagecontenttype import PageContentType
 
 
-
 @python_2_unicode_compatible
 class PageContent(models.Model):
     page = models.ForeignKey(Page, verbose_name=_('Page'))

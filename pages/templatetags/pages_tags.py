@@ -95,12 +95,14 @@ def get_raw_page_text_by_id(context, oid):
     obj = get_page_object_by_id(context, 'text', oid)
     return obj.text if obj else None
 
+
 @register.simple_tag(takes_context=True)
 def page_markdown_by_id(context, oid):
     obj = get_page_object_by_id(context, 'markdown', oid)
     if obj is None:
         return None
     return obj.text
+
 
 @register.assignment_tag(takes_context=True)
 def get_page_markdown_by_id(context, oid):
@@ -111,5 +113,3 @@ def get_page_markdown_by_id(context, oid):
 def get_page_image_by_id(context, oid):
     obj = get_page_object_by_id(context, 'image', oid)
     return obj.image if obj else None
-
-
