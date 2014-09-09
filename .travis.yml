@@ -1,0 +1,28 @@
+language: python
+
+python:
+  - "3.3"
+  - "3.4"
+  - "2.7"
+  - "2.6"
+
+env:
+  - DJANGO="django==1.7"
+  - DJANGO="django==1.6.7"
+  - DJANGO="django==1.5.10"
+
+install:
+  - pip install $DJANGO
+  - pip install -e .
+  - pip install flake8
+
+before_script:
+  - flake8 --exclude=migrations --ignore=E501,E225,E128,E126,F401,F403 pages
+  - cd pages/tests
+
+matrix:
+  exclude:
+   - python: "2.6"
+     env: DJANGO="django==1.7"
+
+script: python ./runtests.py
