@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from django.db.utils import OperationalError
+from django.db.utils import DatabaseError
 
 
 def get_all_content_tuple():
@@ -14,7 +14,7 @@ def get_all_content_tuple():
         types = PageContentType.objects.all()
         for i in types:
             content_types.append((i.type, i.type))
-    except OperationalError:
+    except DatabaseError:
         pass
     return tuple(content_types)
 
