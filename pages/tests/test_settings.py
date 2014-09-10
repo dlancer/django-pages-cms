@@ -74,4 +74,3 @@ ANONYMOUS_USER_ID = -1
 
 # MarkItUp settings
 MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': False, 'extensions': ['extra', 'meta', 'nl2br']})
-
