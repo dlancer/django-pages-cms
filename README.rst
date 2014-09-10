@@ -71,6 +71,8 @@ You must add these apps to your list of ``INSTALLED_APPS`` in ``settings.py``::
 
     INSTALLED_APPS = (
         ...
+        'guardian',
+        'mptt',
         'pages',
     )
 
