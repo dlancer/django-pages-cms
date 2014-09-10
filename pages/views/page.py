@@ -44,7 +44,8 @@ def get_etag(request, **kwargs):
     slug = kwargs.get('slug', None)
     language = get_language()
     modified = get_timestamp(slug, language)
-    return md5(modified + language + is_authenticated).hexdigest()
+    etag_bytes = (modified + language + is_authenticated).encode('utf-8')
+    return md5(etag_bytes).hexdigest()
 
 
 def get_last_modified(request, **kwargs):
