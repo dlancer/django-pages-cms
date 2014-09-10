@@ -17,7 +17,7 @@ install:
   - pip install flake8
 
 before_script:
-  - flake8 --exclude=migrations --ignore=E501,E225,E128,E126,F401,F403 pages
+  - flake8 --exclude=south_migrations --ignore=E501,E225,E128,E126,F401,F403 pages
   - cd pages/tests
 
 matrix:
