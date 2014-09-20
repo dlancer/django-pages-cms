@@ -10,7 +10,7 @@ from pages.models.page import Page
 
 class PagesCase(TestCase):
     urls = 'pages.tests.urls'
-    fixtures = ['fixtures/initial_data.yaml']
+    fixtures = ['fixtures/pages_testdata.yaml']
 
     def setUp(self):
         self.factory = RequestFactory()

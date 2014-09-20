@@ -91,8 +91,8 @@ class PageRedirectContent(PageBaseContent):
 
 class PageMetaContent(PageBaseContent):
     title = models.CharField(max_length=160, blank=True)
-    keywords = models.CharField(max_length=200, blank=True)
     description = models.TextField(max_length=160, blank=True)
+    keywords = models.CharField(max_length=200, blank=True)
     is_noindex = models.BooleanField(_('NoIndex'), default=False)
     is_nofollow = models.BooleanField(_('NoFollow'), default=False)
     objects = models.Manager()

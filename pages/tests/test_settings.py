@@ -34,6 +34,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'guardian',
     'mptt',
+    'markitup',
+    'easy_thumbnails',
+    'image_cropping',
     'pages',
 )
 
@@ -61,8 +64,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 )
 
+# Templates settings
+TEMPLATE_DIRS = tuple([os.path.join(BASE_DIR, app_name, 'templates') for app_name in INSTALLED_APPS])
+TEMPLATE_DIRS += tuple([os.path.join(BASE_DIR, 'templates')])
 
-CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 # django-guardian settings
 AUTHENTICATION_BACKENDS = (
