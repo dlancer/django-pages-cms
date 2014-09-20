@@ -140,6 +140,7 @@ class PageImageContentInline(admin.StackedInline):
             ('language', ),
             ('image', ),
             ('image_cropping_link', ),
+            ('title', ),
             ('tags', ),
             ('comment', ),
         ]}),

@@ -164,6 +164,7 @@ class PageImageContent(PageBaseContent):
     image = ImageCropField(blank=True, null=True, upload_to=make_image_upload_path, storage=file_storage)
     cropping = ImageRatioField('image', '{0:>s}x{1:>s}'.format(
         str(settings.PAGES_IMAGE_WIDTH_MAX), str(settings.PAGES_IMAGE_HEIGHT_MAX)), allow_fullsize=True)
+    title = models.CharField(max_length=250, blank=True)
     tags = models.CharField(max_length=250, blank=True)
     objects = models.Manager()
 
