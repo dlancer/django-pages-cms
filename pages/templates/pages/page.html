@@ -4,10 +4,11 @@
 <html>
 <head lang="{{ LANGUAGE_CODE }}">
     <meta charset="UTF-8">
-    <title>{{ page.meta.title }}</title>
-    <meta name="description" content="{{ page.meta.description }}"/>
-    <meta name="keywords" content="{{ psge.meta.keywords }}"/>
-    <meta name="robots" content="{{ page.meta.robots }}"/>
+    {% get_page_object_by_id "meta" 0 as page_meta %}
+    <title>{{ page_meta.title }}</title>
+    <meta name="description" content="{{ page_meta.description }}"/>
+    <meta name="keywords" content="{{ page_meta.keywords }}"/>
+    <meta name="robots" content="{{ page_meta.robots }}"/>
 </head>
 <body>
 
