@@ -33,11 +33,11 @@ Requirements
     django-mptt==0.6.1
     django-guardian==1.2.4
     django-image-cropping==0.8.3
-    django-markitup==2.2.1
+    django-markitup==2.2.2
     django-taggit==0.12.1
     easy-thumbnails==2.1
     PyYAML==3.11
-    Markdown==2.4.1
+    Markdown==2.5
     South==1.0
 
 Installation
@@ -105,7 +105,39 @@ Customizing content management system
 You have a lot of options available to you to customize ``django-pages-cms``.
 These options should be defined in your ``settings.py`` file.
 
-TODO
+**CMS customization**
+
+# TODO: finish this
+
+* ``PAGES_DEFAULT_LANGUAGE``: default translation language
+
+* ``PAGES_ALLOW_DJANGO_TEMPLATES``: allow use Django template tags
+
+* ``PAGES_USE_SITE_ID``: use site id application
+* ``PAGES_HIDE_SITES``: hide
+* ``PAGES_DEFAULT_TEMPLATE``
+* ``PAGES_RAISE_403``
+* ``PAGES_RENDER_403``
+* ``PAGES_TEMPLATE_403``
+
+* ``PAGES_PAGE_SLUG_NAME``
+* ``PAGES_CACHE_BACKEND``
+* ``PAGES_CACHE_PREFIX``
+* ``PAGES_CACHE_DELETE``
+* ``PAGES_PAGE_CACHE_KEY``
+* ``PAGES_PAGE_VERSION_KEY``
+* ``PAGES_PAGE_CACHE_TIMEOUT``
+
+* ``PAGES_PAGE_HTTP_MAX_AGE``
+
+* ``PAGES_IMAGE_DIR``
+* ``PAGES_IMAGE_WIDTH_MAX``
+* ``PAGES_IMAGE_HEIGHT_MAX``
+* ``PAGES_DELETE_IMAGE_FILE``
+
+* ``PAGES_FALLBACK_LANGUAGE``
+* ``PAGES_PAGE_EXT_CONTENT_TYPES``
+* ``PAGES_PAGE_EXT_CONTENT_INLINES``
 
 Usage
 =====
