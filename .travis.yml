@@ -4,7 +4,6 @@ python:
   - "3.3"
   - "3.4"
   - "2.7"
-  - "2.6"
 
 env:
   - DJANGO="django==1.7"
@@ -19,10 +18,5 @@ install:
 before_script:
   - flake8 --exclude=south_migrations --ignore=E501,E225,E128,E126,F401,F403 pages
   - cd pages/tests
-
-matrix:
-  exclude:
-   - python: "2.6"
-     env: DJANGO="django==1.7"
 
 script: python runtests.py
