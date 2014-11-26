@@ -12,10 +12,7 @@ from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
-from django.conf import settings as django_settings
 from django.template.defaultfilters import slugify
-from django.core.files.storage import FileSystemStorage
 
 from image_cropping import ImageCropField
 from image_cropping import ImageRatioField
@@ -24,6 +21,7 @@ from markitup.fields import MarkupField
 
 from pages.conf import settings
 from pages.models.pagebasecontent import PageBaseContent
+from pages.storage import PageFileSystemStorage
 
 PAGE_EXT_CONTENT_TYPES = []
 
@@ -142,8 +140,7 @@ class PageTextContent(PageBaseContent):
         multiple_per_locale = True
 
 
-def make_file_storage():
-    return FileSystemStorage(location=django_settings.MEDIA_ROOT)
+image_file_storage = PageFileSystemStorage()
 
 
 def make_image_upload_path(instance, filename, prefix=False):
@@ -163,7 +160,7 @@ def make_image_upload_path(instance, filename, prefix=False):
 
 
 class PageImageContent(PageBaseContent):
-    image = ImageCropField(blank=True, null=True, upload_to=make_image_upload_path, storage=make_file_storage)
+    image = ImageCropField(blank=True, null=True, upload_to=make_image_upload_path, storage=image_file_storage)
     cropping = ImageRatioField('image', '{0:>s}x{1:>s}'.format(
         str(settings.PAGES_IMAGE_WIDTH_MAX), str(settings.PAGES_IMAGE_HEIGHT_MAX)), allow_fullsize=True)
     title = models.CharField(max_length=250, blank=True)
