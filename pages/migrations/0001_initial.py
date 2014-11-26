@@ -5,7 +5,6 @@ from django.db import models, migrations
 import markitup.fields
 import pages.models.pagecontenttypes
 import mptt.fields
-import django.core.files.storage
 import django.utils.timezone
 from django.conf import settings
 import image_cropping.fields
@@ -108,8 +107,8 @@ class Migration(migrations.Migration):
                 ('comment', models.CharField(max_length=250, blank=True)),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Created')),
                 ('date_updated', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Updated')),
-                ('image', image_cropping.fields.ImageCropField(storage=django.core.files.storage.FileSystemStorage(location=b'/Volumes/MacOSExt/django-tests/django_pages_cms_test/web/media'), null=True, upload_to=pages.models.pagecontenttypes.make_image_upload_path, blank=True)),
-                (b'cropping', image_cropping.fields.ImageRatioField('image', '600x800', hide_image_field=False, size_warning=True, allow_fullsize=True, free_crop=False, adapt_rotation=False, help_text=None, verbose_name='cropping')),
+                ('image', image_cropping.fields.ImageCropField(storage=pages.models.pagecontenttypes.make_file_storage, null=True, upload_to=pages.models.pagecontenttypes.make_image_upload_path, blank=True)),
+                ('cropping', image_cropping.fields.ImageRatioField('image', '600x800', hide_image_field=False, size_warning=True, allow_fullsize=True, free_crop=False, adapt_rotation=False, help_text=None, verbose_name='cropping')),
                 ('title', models.CharField(max_length=250, blank=True)),
                 ('tags', models.CharField(max_length=250, blank=True)),
                 ('created_by', models.ForeignKey(related_name='pages_pageimagecontent_creator', to=settings.AUTH_USER_MODEL, null=True)),
