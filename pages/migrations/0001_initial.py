@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import pages.storage
 import markitup.fields
 import pages.models.pagecontenttypes
 import mptt.fields
@@ -107,7 +108,7 @@ class Migration(migrations.Migration):
                 ('comment', models.CharField(max_length=250, blank=True)),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Created')),
                 ('date_updated', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Updated')),
-                ('image', image_cropping.fields.ImageCropField(storage=pages.models.pagecontenttypes.make_file_storage, null=True, upload_to=pages.models.pagecontenttypes.make_image_upload_path, blank=True)),
+                ('image', image_cropping.fields.ImageCropField(storage=pages.storage.PageFileSystemStorage(), null=True, upload_to=pages.models.pagecontenttypes.make_image_upload_path, blank=True)),
                 ('cropping', image_cropping.fields.ImageRatioField('image', '600x800', hide_image_field=False, size_warning=True, allow_fullsize=True, free_crop=False, adapt_rotation=False, help_text=None, verbose_name='cropping')),
                 ('title', models.CharField(max_length=250, blank=True)),
                 ('tags', models.CharField(max_length=250, blank=True)),
