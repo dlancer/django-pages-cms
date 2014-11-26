@@ -1,3 +1,4 @@
+# -*- coding: utf-8
 """Implements PageContent model"""
 
 from __future__ import unicode_literals

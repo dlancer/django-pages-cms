@@ -38,7 +38,6 @@ Requirements
     easy-thumbnails==2.1
     PyYAML==3.11
     Markdown==2.5.2
-    South==1.0.1
 
 
 Usage

@@ -1,17 +1,18 @@
+# -*- coding: utf-8
 """Implements Page content models"""
 
 from __future__ import unicode_literals
 import hashlib
 import os
 import uuid
-
 import importlib
-from django.core.urlresolvers import reverse
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings as django_settings
 from django.template.defaultfilters import slugify
 from django.core.files.storage import FileSystemStorage

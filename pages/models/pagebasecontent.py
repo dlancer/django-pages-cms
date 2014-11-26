@@ -1,3 +1,4 @@
+# -*- coding: utf-8
 """Implements PageBaseContent model"""
 
 from __future__ import unicode_literals
@@ -16,7 +17,7 @@ from pages.models.pagecontenttype import get_all_content_tuple
 class PageBaseContent(models.Model):
     type = models.CharField(_('Type'), choices=get_all_content_tuple(), max_length=100, blank=False, db_index=True)
     page = models.ForeignKey('pages.Page', verbose_name=_('Page'))
-    language = models.CharField(max_length=5, default=settings.PAGES_DEFAULT_LANGUAGE)
+    language = models.CharField(max_length=5, default=str(settings.PAGES_DEFAULT_LANGUAGE))
     name = models.CharField(max_length=200, blank=True, unique=True)
     is_extended = models.BooleanField(_('Extended?'), default=False)
     comment = models.CharField(max_length=250, blank=True)
