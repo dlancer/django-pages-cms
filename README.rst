@@ -32,13 +32,13 @@ Requirements
     django-appcore==0.0.3
     django-mptt==0.6.1
     django-guardian==1.2.4
-    django-image-cropping==0.8.3
+    django-image-cropping==0.9
     django-markitup==2.2.2
     django-taggit==0.12.1
     easy-thumbnails==2.1
     PyYAML==3.11
-    Markdown==2.5.1
-    South==1.0
+    Markdown==2.5.2
+    South==1.0.1
 
 
 Usage
