@@ -4,7 +4,7 @@ import os
 
 from django.core.files.storage import FileSystemStorage
 
-from conf import settings
+from pages.conf import settings
 
 
 class PageFileSystemStorage(FileSystemStorage):
@@ -13,23 +13,18 @@ class PageFileSystemStorage(FileSystemStorage):
             self.logger.log(log)
 
     def __init__(self, location=None, logger=None):
-        # Get location from Settings, if not mentioned  PAGES_STORAGE_FILESYSTEM must be set in settings.py
+        # Get location from Settings, if not mentioned PAGES_FILE_LOCATION must be set in settings.py
         if not location:
-            location = settings.PAGES_STORAGE_FILESYSTEM_LOCATION
+            location = settings.PAGES_FILE_LOCATION
         self.logger = logger
         # Initialize super class
         FileSystemStorage.__init__(self, location=location)
-        self.file_permissions_mode = settings.PAGES_STORAGE_FILESYSTEM_FILE_PERMISSION_MODE
+        self.file_permissions_mode = settings.PAGES_FILE_UPLOAD_PERMISSIONS
+        if getattr(settings, 'FILE_UPLOAD_DIRECTORY_PERMISSIONS', False):
+            self.directory_permissions_mode = settings.PAGES_FILE_UPLOAD_DIRECTORY_PERMISSIONS
+
         # add log
         self.__log('PageFileSystemStorage Initialized')
-
-    def get_available_name(self, name):
-        # if file name exists
-        if self.exists(name):
-            # Remove the existing file
-            self.delete(name)
-        # Return the input name as output
-        return name
 
     # override default behavior where default mode is 'rb'
     def open(self, name, mode='r'):
@@ -40,12 +35,12 @@ class PageFileSystemStorage(FileSystemStorage):
         return FileSystemStorage._open(self, name, mode)
 
     def exists(self, name):
-        fExist = os.path.exists(self.path(name))
-        if fExist:
+        exist = os.path.exists(self.path(name))
+        if exist:
             self.__log('File ' + name + ' exists.')
         else:
             self.__log('File ' + name + ' does not exist.')
-        return fExist
+        return exist
 
     def delete(self, name):
         FileSystemStorage.delete(self, name)
