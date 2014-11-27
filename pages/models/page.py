@@ -52,7 +52,6 @@ class Page(MPTTModel):
 
     if getattr(django_settings, 'SITE_ID'):
         sites = models.ManyToManyField(Site,
-                                       default=django_settings.SITE_ID,
                                        help_text=_('The site(s) where this pages is accessible.'),
                                        verbose_name=_('sites'))
     objects = PageManager()
