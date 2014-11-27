@@ -30,7 +30,7 @@ class PageFileSystemStorage(FileSystemStorage):
     def open(self, name, mode='r'):
         return FileSystemStorage.open(self, name, mode)
 
-    def _open(self, name, mode):
+    def _open(self, name, mode='rb'):
         self.__log('Opening file ' + name + ' in mode=' + mode)
         return FileSystemStorage._open(self, name, mode)
 
