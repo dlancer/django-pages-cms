@@ -21,6 +21,8 @@ You must add these apps to your list of ``INSTALLED_APPS`` in ``settings.py``::
         'pages',
     )
 
+If you use Django<1.7, you should add ``south`` to ``INSTALLED_APPS``.
+
 Include content management system URLconf in your project urls.py like this::
 
     urlpatterns = patterns(
@@ -35,7 +37,7 @@ that are necessary for operation.
 Database migration
 ------------------
 
-If you use Django 1.5+ you can use database migration by add South application to your django settings.
+If you use Django<1.7 you can use database migration by add South application to your django settings.
 Django 1.7+ has native database migration support.
 
 Multilingual support

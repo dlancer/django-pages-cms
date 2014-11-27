@@ -39,6 +39,7 @@ Requirements
     PyYAML==3.11
     Markdown==2.5.2
 
+If you use Django<1.7, you should install South==1.0.1
 
 Usage
 =====
