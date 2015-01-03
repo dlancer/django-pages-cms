@@ -100,7 +100,7 @@ class Page(MPTTModel):
 
     @property
     def is_visible(self):
-        """Return True if pages is visible"""
+        """Return True if page is visible"""
         now = timezone.now()
         if self.date_publication_end:
             publication = self.date_publication < now < self.date_publication_end
