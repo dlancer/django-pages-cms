@@ -8,6 +8,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.db.utils import DatabaseError
 
+from pages.managers import ContentTypeManager
 
 def get_all_content_tuple():
     content_types = []
@@ -26,7 +27,7 @@ class PageContentType(models.Model):
     class_name = models.CharField(_('Class'), max_length=100, blank=False)
     admin_class_name = models.CharField(_('Admin Class'), max_length=100, blank=False)
     is_extended = models.BooleanField('Extended', default=False)
-    objects = models.Manager()
+    objects = ContentTypeManager()
 
     def __str__(self):
         """id string of instance"""
