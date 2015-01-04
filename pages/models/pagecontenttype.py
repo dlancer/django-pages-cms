@@ -10,6 +10,7 @@ from django.db.utils import DatabaseError
 
 from pages.managers import ContentTypeManager
 
+
 def get_all_content_tuple():
     content_types = []
     try:
