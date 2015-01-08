@@ -13,7 +13,7 @@ class PageFileSystemStorage(FileSystemStorage):
             self.logger.log(log)
 
     def __init__(self, location=None, logger=None):
-        # Get location from Settings, if not mentioned PAGES_FILE_LOCATION must be set in settings.py
+        # Get location from Settings, if not mentioned PAGES_FILE_LOCATION must be set in settings
         if not location:
             location = settings.PAGES_FILE_LOCATION
         self.logger = logger

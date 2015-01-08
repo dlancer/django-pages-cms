@@ -1,14 +1,12 @@
 """Implements admin interface for Pages"""
 
+import importlib
+
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-
-import importlib
-
 from mptt.admin import MPTTModelAdmin
 from guardian.admin import GuardedModelAdmin
-
 
 from pages.conf import settings
 from pages.models import Page
@@ -16,6 +14,7 @@ from pages.models import PageContent
 from pages.models import PageContentType
 from pages.admin import pagecontenttypes
 from pages.admin.pagecontent import PageContentInline
+
 
 PAGE_EXT_CONTENT_INLINES = []
 

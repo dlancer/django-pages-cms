@@ -11,11 +11,9 @@ from django.views.decorators.http import condition
 from django.shortcuts import render
 from django.utils.translation import get_language
 from django.utils import timezone
-from django.conf import settings as django_settings
 from django.core.exceptions import PermissionDenied
 
 from guardian.shortcuts import get_perms
-
 from appcore.views.mixins import DecoratorChainingMixin
 
 from pages.conf import settings
@@ -78,7 +76,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
         if page:
             # check if login required
             if page.is_login_required and not request.user.is_authenticated():
-                return HttpResponseRedirect(django_settings.LOGIN_URL)
+                return HttpResponseRedirect(settings.LOGIN_URL)
 
             # check user view permission
             if page.is_permission_required:
@@ -86,7 +84,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                     if settings.PAGES_RAISE_403:
                         raise PermissionDenied
                     if settings.PAGES_RENDER_403:
-                        return render(request, django_settings.PAGES_TEMPLATE_403, {})
+                        return render(request, settings.PAGES_TEMPLATE_403, {})
                     else:
                         return HttpResponseForbidden()
 
@@ -116,7 +114,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
 
                 # check if login required
                 if page.is_login_required and not request.user.is_authenticated():
-                    return HttpResponseRedirect(django_settings.LOGIN_URL)
+                    return HttpResponseRedirect(settings.LOGIN_URL)
 
                 # check user view permission
                 if page.is_permission_required:
@@ -124,7 +122,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                         if settings.PAGES_RAISE_403:
                             raise PermissionDenied
                         if settings.PAGES_RENDER_403:
-                            return render(request, django_settings.PAGES_TEMPLATE_403, {})
+                            return render(request, settings.PAGES_TEMPLATE_403, {})
                         else:
                             return HttpResponseForbidden()
 

@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings as django_settings
 
 from pages.conf import settings
 
@@ -9,7 +8,7 @@ class PageManager(models.Manager):
         def get_query_set(self):
             """Restrict operations to pages on the current site."""
             return super(PageManager, self).get_query_set().filter(
-                sites=django_settings.SITE_ID)
+                sites=settings.SITE_ID)
 
     def on_site(self, site_id=None):
         """Return a :class:`QuerySet` of pages that are published on the site
@@ -19,7 +18,7 @@ class PageManager(models.Manager):
         """
         if settings.PAGES_USE_SITE_ID:
             if not site_id:
-                site_id = django_settings.SITE_ID
+                site_id = settings.SITE_ID
             return self .filter(sites=site_id)
         return self.all()
 

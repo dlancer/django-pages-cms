@@ -3,23 +3,18 @@
 
 from __future__ import unicode_literals
 
-
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings as django_settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.contenttypes.models import ContentType
-
 from mptt.models import MPTTModel, TreeForeignKey
-
 from guardian.models import UserObjectPermissionBase
 from guardian.models import GroupObjectPermissionBase
-
 from guardian.models import UserObjectPermission
 from guardian.models import GroupObjectPermission
 
@@ -36,8 +31,8 @@ class Page(MPTTModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     template = models.CharField(max_length=254, blank=True)
     comment = models.TextField(max_length=254, blank=True)
-    created_by = models.ForeignKey(django_settings.AUTH_USER_MODEL, related_name='page_creator', null=True)
-    updated_by = models.ForeignKey(django_settings.AUTH_USER_MODEL, related_name='page_editor', null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_creator', null=True)
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_editor', null=True)
     date_created = models.DateTimeField(_('Created'), default=timezone.now)
     date_updated = models.DateTimeField(_('Updated'), default=timezone.now)
     date_approved = models.DateTimeField(_('Approved'), null=True, blank=True)
@@ -50,7 +45,7 @@ class Page(MPTTModel):
     is_login_required = models.BooleanField(_('Login required'), default=False)
     is_permission_required = models.BooleanField(_('Permission required'), default=False)
 
-    if getattr(django_settings, 'SITE_ID'):
+    if getattr(settings, 'SITE_ID'):
         sites = models.ManyToManyField(Site,
                                        help_text=_('The site(s) where this pages is accessible.'),
                                        verbose_name=_('sites'))
@@ -211,4 +206,4 @@ def remove_obj_perms_connected_with_user(sender, instance, **kwargs):
     GroupObjectPermission.objects.filter(filters).delete()
 
 
-pre_delete.connect(remove_obj_perms_connected_with_user, sender=django_settings.AUTH_USER_MODEL)
+pre_delete.connect(remove_obj_perms_connected_with_user, sender=settings.AUTH_USER_MODEL)

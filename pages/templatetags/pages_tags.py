@@ -4,6 +4,7 @@ from django.utils.html import escape
 
 from pages.conf import settings
 
+
 register = template.Library()
 
 

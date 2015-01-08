@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings as django_settings
 from django.utils.encoding import python_2_unicode_compatible
 
 from pages.conf import settings
@@ -24,10 +23,10 @@ class PageBaseContent(models.Model):
     date_created = models.DateTimeField(_('Created'), default=timezone.now)
     date_updated = models.DateTimeField(_('Updated'), default=timezone.now)
     created_by = models.ForeignKey(
-        django_settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_creator', null=True
+        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_creator', null=True
     )
     updated_by = models.ForeignKey(
-        django_settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_editor', null=True
+        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_editor', null=True
     )
 
     def __str__(self):
