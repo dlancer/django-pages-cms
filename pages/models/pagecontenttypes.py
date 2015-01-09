@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 import hashlib
 import os
+import base64
 import uuid
 import importlib
 
@@ -145,15 +146,21 @@ image_file_storage = PageFileSystemStorage()
 def make_image_upload_path(instance, filename, prefix=False):
     """Generate upload path and new filename for pages image"""
 
+    # store original filename
     instance.filename = filename
+    # always generate unique name, for security reason
     file_uuid = uuid.uuid4().hex
+
+    # generate short sha1 based hash
+    name_sha = hashlib.sha1(file_uuid).digest()
+    name_hash = base64.urlsafe_b64encode(name_sha[:9]).decode('utf-8')
 
     return u'{path}/{sub0}/{sub1}/{sub2}/{name}.{ext}'.format(
         path=settings.PAGES_IMAGE_DIR,
         sub0=file_uuid[0:2],
         sub1=file_uuid[7:9],
         sub2=file_uuid[12:14],
-        name=hashlib.sha1(file_uuid).hexdigest(),
+        name=name_hash,
         ext=os.path.splitext(filename)[1].strip('.').lower()
     )
 
