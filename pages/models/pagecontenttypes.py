@@ -14,6 +14,7 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
+
 from image_cropping import ImageCropField
 from image_cropping import ImageRatioField
 from markitup.fields import MarkupField

@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.contenttypes.models import ContentType
+
 from mptt.models import MPTTModel, TreeForeignKey
 from guardian.models import UserObjectPermissionBase
 from guardian.models import GroupObjectPermissionBase
