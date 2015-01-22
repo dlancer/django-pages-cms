@@ -230,5 +230,3 @@ def delete_image(sender, **kwargs):
                 image.image.storage.delete(image.image.path)
             except Exception:
                 pass
-
-

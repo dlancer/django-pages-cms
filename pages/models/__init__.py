@@ -8,4 +8,3 @@ from pages.models.pagecontenttypes import PageMetaContent
 from pages.models.pagecontenttypes import PageTextContent
 from pages.models.pagecontenttypes import PageImageContent
 from pages.models.pagecontenttypes import PageMarkdownContent
-
