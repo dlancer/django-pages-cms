@@ -18,12 +18,13 @@ from pages.admin.pagecontent import PageContentInline
 
 PAGE_EXT_CONTENT_INLINES = []
 
-if settings.PAGES_PAGE_EXT_CONTENT_INLINES:
-    try:
-        for inline in settings.PAGES_PAGE_EXT_CONTENT_INLINES:
-            PAGE_EXT_CONTENT_INLINES.append(importlib.import_module(inline))
-    except ImportError:
-        raise 'Extended content type inline import error'
+if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
+    if settings.PAGES_PAGE_EXT_CONTENT_INLINES is not None:
+        try:
+            for inline in settings.PAGES_PAGE_EXT_CONTENT_INLINES:
+                PAGE_EXT_CONTENT_INLINES.append(importlib.import_module(inline))
+        except ImportError as e:
+            raise Exception('Extended content type inline import error: {0}'.format(e))
 
 
 class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
@@ -41,13 +42,18 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
     save_on_top = True
     actions_on_bottom = True
 
+    page_fields = [
+        ('name', ),
+        ('parent', ),
+        ('template', ),
+    ]
+
+    if hasattr(settings, 'SITE_ID'):
+        if settings.PAGES_USE_SITE_ID:
+            page_fields.append(('sites', ))
+
     fieldsets = [
-        (None, {'fields': [
-            ('name', ),
-            ('parent', ),
-            ('template', ),
-            ('sites', ),
-        ]}),
+        (None, {'fields': page_fields}),
 
 
         (_('State'), {'fields': [
@@ -79,8 +85,9 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
                     if not (issubclass(content_class, admin.TabularInline)
                             or issubclass(content_class, admin.StackedInline)):
                         content_class = None
-                    else:
-                        if settings.PAGES_PAGE_EXT_CONTENT_INLINES:
+                except AttributeError:
+                    try:
+                        if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
                             for module in PAGE_EXT_CONTENT_INLINES:
                                 content_class = getattr(module, class_name)
                                 if not (issubclass(content_class, admin.TabularInline)
@@ -88,12 +95,11 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
                                     content_class = None
                                 else:
                                     break
-                except AttributeError:
-                    pass
+                    except AttributeError:
+                        pass
                 if content_class is not None:
                     inlines.append(content_class)
-            else:
-                content_class = None
+            content_class = None
         return inlines
 
     def change_view(self, request, object_id, form_url='', extra_context=None):

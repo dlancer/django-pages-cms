@@ -1,4 +1,4 @@
-"""Implements admin interface for Pages"""
+"""Implements admin interface for page content"""
 
 from django.contrib import admin
 
@@ -13,10 +13,10 @@ from pages.models import PageMarkdownContent
 
 
 class PageSlugContentAdmin(admin.ModelAdmin):
-    list_display = ['__str__']
+    list_display = ('__str__', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     list_display_links = ['__str__']
 
-    exclude = ('type', 'name', 'created_by', 'updated_by')
+    exclude = ('type', 'name', 'is_extended', 'created_by', 'updated_by',)
     save_on_top = True
     actions_on_bottom = True
 
@@ -38,10 +38,10 @@ class PageSlugContentInline(admin.StackedInline):
 
 
 class PageRedirectContentAdmin(admin.ModelAdmin):
-    list_display = ['__str__']
+    list_display = ('__str__', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     list_display_links = ['__str__']
 
-    exclude = ('type', 'name', 'created_by', 'updated_by')
+    exclude = ('type', 'name', 'is_extended', 'created_by', 'updated_by')
     save_on_top = True
     actions_on_bottom = True
 
@@ -52,7 +52,7 @@ class PageRedirectContentInline(admin.StackedInline):
     model = PageRedirectContent
     # max_num = 1
     extra = 1
-    exclude = ('name', 'created_by', 'updated_by', 'date_created', 'date_updated', )
+    exclude = ('name', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     fieldsets = [
         (None, {'fields': [
             ('language', ),
@@ -65,10 +65,10 @@ class PageRedirectContentInline(admin.StackedInline):
 
 
 class PageMetaContentAdmin(admin.ModelAdmin):
-    list_display = ['__str__']
+    list_display = ('__str__', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     list_display_links = ['__str__']
 
-    exclude = ('type', 'name', 'created_by', 'updated_by')
+    exclude = ['type', 'name', 'is_extended', 'created_by', 'updated_by']
     save_on_top = True
     actions_on_bottom = True
 
@@ -79,7 +79,7 @@ class PageMetaContentInline(admin.StackedInline):
     model = PageMetaContent
     # max_num = 1
     extra = 1
-    exclude = ('name', 'created_by', 'updated_by', 'date_created', 'date_updated', )
+    exclude = ('name', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     fieldsets = [
         (None, {'fields': [
             ('language', ),
@@ -93,10 +93,10 @@ class PageMetaContentInline(admin.StackedInline):
 
 
 class PageTextContentAdmin(admin.ModelAdmin):
-    list_display = ['__str__']
+    list_display = ('__str__', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     list_display_links = ['__str__']
 
-    exclude = ('type', 'name', 'created_by', 'updated_by')
+    exclude = ('type', 'name', 'is_extended', 'created_by', 'updated_by',)
     save_on_top = True
     actions_on_bottom = True
 
@@ -119,10 +119,10 @@ class PageTextContentInline(admin.StackedInline):
 
 
 class PageImageContentAdmin(ImageCroppingMixin, admin.ModelAdmin):
-    list_display = ['__str__']
+    list_display = ('__str__', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     list_display_links = ['__str__']
 
-    exclude = ('type', 'name', 'created_by', 'updated_by')
+    exclude = ('type', 'name', 'is_extended', 'created_by', 'updated_by',)
     save_on_top = True
     actions_on_bottom = True
 
@@ -133,8 +133,8 @@ class PageImageContentInline(admin.StackedInline):
     model = PageImageContent
     # max_num = 1
     extra = 1
-    exclude = ('name', 'created_by', 'updated_by', 'date_created', 'date_updated', )
-    readonly_fields = ('image_cropping_link', )
+    exclude = ('name', 'created_by', 'updated_by', 'date_created', 'date_updated',)
+    readonly_fields = ['image_cropping_link']
     fieldsets = [
         (None, {'fields': [
             ('language', ),
@@ -148,10 +148,10 @@ class PageImageContentInline(admin.StackedInline):
 
 
 class PageMarkdownContentAdmin(admin.ModelAdmin):
-    list_display = ['__str__']
+    list_display = ('__str__', 'created_by', 'updated_by', 'date_created', 'date_updated',)
     list_display_links = ['__str__']
 
-    exclude = ('type', 'name', 'created_by', 'updated_by')
+    exclude = ('type', 'name', 'is_extended', 'created_by', 'updated_by',)
     save_on_top = True
     actions_on_bottom = True
 

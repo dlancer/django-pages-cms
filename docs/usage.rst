@@ -31,8 +31,13 @@ Include content management system URLconf in your project urls.py like this::
         url(r'^page/', include('pages.urls')),
     )
 
-Run ``python manage.py syncdb``.  This creates the appropriate tables in your database
-that are necessary for operation.
+Run ``python manage.py syncdb`` for Django < 1.7 or ``python manage.py migrate`` for django 1.7+.
+This creates the appropriate tables in your database that are necessary for operation.
+
+After database creation you must load standard content types to database from provided fixtures::
+
+    $ python manage.py loaddata content_types
+
 
 Database migration
 ------------------
@@ -91,5 +96,21 @@ These options should be defined in your ``settings.py`` file.
 
 **CMS extended content types settings**
 
-* ``PAGES_PAGE_EXT_CONTENT_TYPES``: python file with extended content types
-* ``PAGES_PAGE_EXT_CONTENT_INLINES``: python file with extended content types inlines for admin panel
+* ``PAGES_PAGE_USE_EXT_CONTENT_TYPES``: extended content types support
+* ``PAGES_PAGE_EXT_CONTENT_TYPES``: extended content types models
+* ``PAGES_PAGE_EXT_CONTENT_INLINES``: extended content types inlines for admin panel
+
+
+Extended content types
+======================
+
+Extended content types support is disabled by default, if your want use extended content types
+you should setup these options in your django project settings:
+
+``PAGES_PAGE_USE_EXT_CONTENT_TYPES`` = True
+``PAGES_PAGE_EXT_CONTENT_TYPES`` = list(your extend content types models)
+``PAGES_PAGE_EXT_CONTENT_INLINES`` = list(your extend content types inlines for admin panel)
+
+You also should add your extended content types to PageContentType table.
+You may use embed video content type realisation in example project as tutorial.
+

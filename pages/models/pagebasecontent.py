@@ -60,7 +60,7 @@ class PageBaseContent(models.Model):
 
         self.updated_by = self.page.updated_by
 
-        # Call parent's ``save`` function
+        # Call parent's ``save`` method
         super(PageBaseContent, self).save(force_insert, force_update, using, update_fields)
 
     class Meta:

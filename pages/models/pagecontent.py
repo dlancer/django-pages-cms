@@ -25,7 +25,7 @@ class PageContent(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         """Override the default ``save`` method."""
 
-        # Call parent's ``save`` function
+        # Call parent's ``save`` method
         super(PageContent, self).save(force_insert, force_update, using, update_fields)
 
     class Meta:

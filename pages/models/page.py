@@ -45,11 +45,8 @@ class Page(MPTTModel):
     is_published = models.BooleanField(_('Published'), default=False)
     is_login_required = models.BooleanField(_('Login required'), default=False)
     is_permission_required = models.BooleanField(_('Permission required'), default=False)
-
-    if getattr(settings, 'SITE_ID'):
-        sites = models.ManyToManyField(Site,
-                                       help_text=_('The site(s) where this pages is accessible.'),
-                                       verbose_name=_('sites'))
+    sites = models.ManyToManyField(Site, help_text=_('The site(s) where this pages is accessible.'),
+                                   verbose_name=_('sites'))
     objects = PageManager()
 
     def __init__(self, *args, **kwargs):
@@ -91,7 +88,7 @@ class Page(MPTTModel):
         if self.template is not None:
             self.template = self.template.strip()
 
-        # Call parent's ``save`` function
+        # Call parent's ``save`` method
         super(Page, self).save(force_insert, force_update, using, update_fields)
 
     @property
@@ -126,17 +123,18 @@ class Page(MPTTModel):
                 content_class = getattr(pagecontenttypes, content_type.class_name)
                 if not issubclass(content_class, pagecontenttypes.PageBaseContent):
                     content_class = None
-                else:
-                    if settings.PAGES_PAGE_EXT_CONTENT_TYPES:
-                        if pagecontenttypes.PAGE_EXT_CONTENT_TYPES:
+            except AttributeError:
+                try:
+                    if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
+                        if pagecontenttypes.PAGE_EXT_CONTENT_TYPES is not None:
                             for module in pagecontenttypes.PAGE_EXT_CONTENT_TYPES:
                                 content_class = getattr(module, content_type.class_name)
                                 if not issubclass(content_class, pagecontenttypes.PageBaseContent):
                                     content_class = None
                                 else:
                                     break
-            except AttributeError:
-                pass
+                except AttributeError:
+                    pass
         return content_class
 
     def get_template(self):

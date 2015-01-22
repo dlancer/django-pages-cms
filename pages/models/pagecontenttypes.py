@@ -1,5 +1,5 @@
 # -*- coding: utf-8
-"""Implements Page content models"""
+"""Implements page content models"""
 
 from __future__ import unicode_literals
 import hashlib
@@ -26,12 +26,13 @@ from pages.storage import PageFileSystemStorage
 
 PAGE_EXT_CONTENT_TYPES = []
 
-if settings.PAGES_PAGE_EXT_CONTENT_TYPES:
-    try:
-        for content_type in settings.PAGES_PAGE_EXT_CONTENT_TYPES:
-            PAGE_EXT_CONTENT_TYPES.append(importlib.import_module(content_type))
-    except ImportError:
-        raise 'Extended content type import error'
+if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
+    if settings.PAGES_PAGE_EXT_CONTENT_TYPES is not None:
+        try:
+            for content_type in settings.PAGES_PAGE_EXT_CONTENT_TYPES:
+                PAGE_EXT_CONTENT_TYPES.append(importlib.import_module(content_type))
+        except ImportError as e:
+            raise Exception('Extended content type import error: {0}'.format(e))
 
 
 class PageSlugContent(PageBaseContent):
@@ -141,6 +142,26 @@ class PageTextContent(PageBaseContent):
         multiple_per_locale = True
 
 
+class PageMarkdownContent(PageBaseContent):
+    text = MarkupField(blank=True)
+    is_template = models.BooleanField(_('Template?'), default=False)
+    objects = models.Manager()
+
+    def update_fields(self, change):
+        if not change:
+            self.type = 'markdown'
+
+    class Meta(PageBaseContent.Meta):
+        app_label = 'pages'
+        verbose_name = _('Markdown')
+        verbose_name_plural = _('Markdown')
+
+    class PageMeta(PageBaseContent.PageMeta):
+        context_name = 'markdown'
+        multiple_per_page = True
+        multiple_per_locale = True
+
+
 image_file_storage = PageFileSystemStorage()
 
 
@@ -211,21 +232,3 @@ def delete_image(sender, **kwargs):
                 pass
 
 
-class PageMarkdownContent(PageBaseContent):
-    text = MarkupField(blank=True)
-    is_template = models.BooleanField(_('Template?'), default=False)
-    objects = models.Manager()
-
-    def update_fields(self, change):
-        if not change:
-            self.type = 'markdown'
-
-    class Meta(PageBaseContent.Meta):
-        app_label = 'pages'
-        verbose_name = _('Markdown')
-        verbose_name_plural = _('Markdown')
-
-    class PageMeta(PageBaseContent.PageMeta):
-        context_name = 'markdown'
-        multiple_per_page = True
-        multiple_per_locale = True

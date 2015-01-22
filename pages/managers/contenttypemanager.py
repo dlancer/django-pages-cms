@@ -1,6 +1,8 @@
 import django
 from django.db import models
 
+from pages.conf import settings
+
 
 class ContentTypeManager(models.Manager):
 
@@ -11,7 +13,10 @@ class ContentTypeManager(models.Manager):
             qs = super_.get_query_set()
         else:
             qs = super_.get_queryset()
-        return qs
+        if not settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
+            return qs.filter(is_extended=False)
+        else:
+            return qs
 
     get_query_set = get_queryset
 

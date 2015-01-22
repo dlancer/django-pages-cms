@@ -151,7 +151,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                         if content:
                             page_content.update({content_type.type: content})
 
-                    if settings.PAGES_PAGE_EXT_CONTENT_TYPES:
+                    if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
                         ext_content_types = PageContentType.objects.extended()
                         for content_type in ext_content_types:
                             content_class = Page.get_content_class(content_type.type)

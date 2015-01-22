@@ -23,3 +23,4 @@ You can install the latest stable package running::
 
     $ easy_install django-pages-cms
 
+

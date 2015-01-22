@@ -99,26 +99,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'pages', ['PageTextContent'])
 
-        # Adding model 'PageImageContent'
-        db.create_table(u'pages_pageimagecontent', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length=100, db_index=True)),
-            ('page', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pages.Page'])),
-            ('language', self.gf('django.db.models.fields.CharField')(default='en', max_length=5)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=200, blank=True)),
-            ('is_extended', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('comment', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('date_updated', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name=u'pages_pageimagecontent_creator', null=True, to=orm['auth.User'])),
-            ('updated_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name=u'pages_pageimagecontent_editor', null=True, to=orm['auth.User'])),
-            ('image', self.gf(u'django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
-            ('cropping', self.gf(u'django.db.models.fields.CharField')(max_length=255, blank=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
-            ('tags', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
-        ))
-        db.send_create_signal(u'pages', ['PageImageContent'])
-
         # Adding model 'PageMarkdownContent'
         db.create_table(u'pages_pagemarkdowncontent', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -137,6 +117,26 @@ class Migration(SchemaMigration):
             (u'_text_rendered', self.gf('django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal(u'pages', ['PageMarkdownContent'])
+
+        # Adding model 'PageImageContent'
+        db.create_table(u'pages_pageimagecontent', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('type', self.gf('django.db.models.fields.CharField')(max_length=100, db_index=True)),
+            ('page', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pages.Page'])),
+            ('language', self.gf('django.db.models.fields.CharField')(default='en', max_length=5)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=200, blank=True)),
+            ('is_extended', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('comment', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('date_updated', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name=u'pages_pageimagecontent_creator', null=True, to=orm['auth.User'])),
+            ('updated_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name=u'pages_pageimagecontent_editor', null=True, to=orm['auth.User'])),
+            ('image', self.gf(u'django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
+            ('cropping', self.gf(u'django.db.models.fields.CharField')(default=u'', max_length=255, blank=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
+            ('tags', self.gf('django.db.models.fields.CharField')(max_length=250, blank=True)),
+        ))
+        db.send_create_signal(u'pages', ['PageImageContent'])
 
         # Adding model 'Page'
         db.create_table(u'pages_page', (
@@ -229,11 +229,11 @@ class Migration(SchemaMigration):
         # Deleting model 'PageTextContent'
         db.delete_table(u'pages_pagetextcontent')
 
-        # Deleting model 'PageImageContent'
-        db.delete_table(u'pages_pageimagecontent')
-
         # Deleting model 'PageMarkdownContent'
         db.delete_table(u'pages_pagemarkdowncontent')
+
+        # Deleting model 'PageImageContent'
+        db.delete_table(u'pages_pageimagecontent')
 
         # Deleting model 'Page'
         db.delete_table(u'pages_page')
@@ -309,7 +309,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '200'}),
             'parent': ('mptt.fields.TreeForeignKey', [], {'blank': 'True', 'related_name': "u'children'", 'null': 'True', 'to': u"orm['pages.Page']"}),
             u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'sites': ('django.db.models.fields.related.ManyToManyField', [], {'default': '1', 'to': u"orm['sites.Site']", 'symmetrical': 'False'}),
+            'sites': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['sites.Site']", 'symmetrical': 'False'}),
             'template': ('django.db.models.fields.CharField', [], {'max_length': '254', 'blank': 'True'}),
             u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'updated_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'page_editor'", 'null': 'True', 'to': u"orm['auth.User']"})
@@ -339,7 +339,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'PageImageContent'},
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'pages_pageimagecontent_creator'", 'null': 'True', 'to': u"orm['auth.User']"}),
-            'cropping': (u'django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
+            'cropping': (u'django.db.models.fields.CharField', [], {'default': "u''", 'max_length': '255', 'blank': 'True'}),
             'date_created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

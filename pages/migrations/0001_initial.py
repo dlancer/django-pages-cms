@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('level', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('created_by', models.ForeignKey(related_name='page_creator', to=settings.AUTH_USER_MODEL, null=True)),
                 ('parent', mptt.fields.TreeForeignKey(related_name='children', blank=True, to='pages.Page', null=True)),
-                ('sites', models.ManyToManyField(default=1, help_text='The site(s) where this pages is accessible.', verbose_name='sites', to='sites.Site')),
+                ('sites', models.ManyToManyField(help_text='The site(s) where this pages is accessible.', to='sites.Site', verbose_name='sites')),
                 ('updated_by', models.ForeignKey(related_name='page_editor', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
@@ -109,7 +109,7 @@ class Migration(migrations.Migration):
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Created')),
                 ('date_updated', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Updated')),
                 ('image', image_cropping.fields.ImageCropField(storage=pages.storage.PageFileSystemStorage(), null=True, upload_to=pages.models.pagecontenttypes.make_image_upload_path, blank=True)),
-                ('cropping', image_cropping.fields.ImageRatioField('image', '600x800', hide_image_field=False, size_warning=True, allow_fullsize=True, free_crop=False, adapt_rotation=False, help_text=None, verbose_name='cropping')),
+                (b'cropping', image_cropping.fields.ImageRatioField('image', '600x800', hide_image_field=False, size_warning=True, allow_fullsize=True, free_crop=False, adapt_rotation=False, help_text=None, verbose_name='cropping')),
                 ('title', models.CharField(max_length=250, blank=True)),
                 ('tags', models.CharField(max_length=250, blank=True)),
                 ('created_by', models.ForeignKey(related_name='pages_pageimagecontent_creator', to=settings.AUTH_USER_MODEL, null=True)),

@@ -1,3 +1,5 @@
+* rewrite migrations for optional extended content and sites framework
+
 * add example project
 * add more tests
 * documentation
