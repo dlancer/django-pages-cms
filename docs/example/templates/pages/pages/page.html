@@ -1,0 +1,33 @@
+{% load cache i18n %}
+{% load pages_tags %}
+<!DOCTYPE html>
+<html>
+<head lang="{{ LANGUAGE_CODE }}">
+    <meta charset="UTF-8">
+    <title>{{ page.meta.title }}</title>
+</head>
+<body>
+
+<form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}"/>
+    <select name="language">
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="{% trans "Set" %}"/>
+</form>
+<br/>
+
+{% cache page.timeout "pages" page.cache_key page.cache_version %}
+    {% page_text_by_id 0 %}
+{#    {% get_page_image_by_id 0 as image %}#}
+{#    <img src="{{ image.url }}" />#}
+{% endcache %}
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+django-pages-cms>=0.0.15
+django-embed-video==0.11

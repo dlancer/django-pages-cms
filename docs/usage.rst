@@ -104,7 +104,7 @@ These options should be defined in your ``settings.py`` file.
 Extended content types
 ======================
 
-Extended content types support is disabled by default, if your want use extended content types
+Extended content types support is disabled by default, if you want use extended content types
 you should setup these options in your django project settings:
 
 ``PAGES_PAGE_USE_EXT_CONTENT_TYPES`` = True
