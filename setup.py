@@ -44,5 +44,5 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
     ],)
