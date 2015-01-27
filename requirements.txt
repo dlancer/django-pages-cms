@@ -1,6 +1,5 @@
 Django>=1.5
-django-appcore==0.0.3
-django-appconf>=0.6
+django-appcore==0.0.4
 django-mptt==0.6.1
 django-guardian==1.2.5
 django-image-cropping==0.9.1
