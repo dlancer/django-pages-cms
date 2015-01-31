@@ -55,6 +55,7 @@ def get_page_object_by_name(context, name):
                     break
     return selected_object
 
+
 @register.assignment_tag(takes_context=True)
 def get_page_object_by_id(context, object_type, oid):
     """

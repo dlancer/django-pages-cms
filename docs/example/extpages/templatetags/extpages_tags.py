@@ -16,5 +16,3 @@ def page_video_by_id(context, oid):
 @register.assignment_tag(takes_context=True)
 def get_page_video_by_id(context, oid):
     return page_video_by_id(context, oid)
-
-

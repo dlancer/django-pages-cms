@@ -13,12 +13,10 @@ urlpatterns = patterns('',
                        url(r'^$', PageDetailsView.as_view(), kwargs={pages_settings.PAGES_PAGE_SLUG_NAME: 'home', }),
                        url(r'^i18n/', include('django.conf.urls.i18n')),
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^markitup/', include('markitup.urls')),
-)
+                       url(r'^markitup/', include('markitup.urls')),)
 
 urlpatterns += i18n_patterns('',
-                             url(r'^pages/', include('pages.urls')),
-)
+                             url(r'^pages/', include('pages.urls')),)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -81,7 +81,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     # should be enabled only for django < 1.7
-    #'south',
+    # 'south',
     'mptt',
     'guardian',
     'markitup',
@@ -174,4 +174,3 @@ MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': False, 'extensions': ['ext
 MARKITUP_SET = 'markitup/sets/markdown'
 MARKITUP_SKIN = 'markitup/skins/simple'
 MARKITUP_AUTO_PREVIEW = True
-
