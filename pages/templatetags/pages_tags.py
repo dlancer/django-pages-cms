@@ -9,28 +9,51 @@ register = template.Library()
 
 
 @register.assignment_tag()
-def get_page_object(objects, name):
+def get_page_object(objects, sid):
     """
     **Arguments**
 
     ``objects``
         all objects
 
-    **Keyword arguments**
-
-    ``name``
-        name for object selection
+    ``sid`
+        symbolic id for object selection
 
     :return selected object
     """
     selected_object = None
 
     for obj in objects:
-        if obj.name == name:
+        if obj.sid == sid:
             selected_object = obj
             break
     return selected_object
 
+
+@register.assignment_tag(takes_context=True)
+def get_page_object_by_name(context, name):
+    """
+    **Arguments**
+
+    ``name`
+        name for object selection
+
+    :return selected object
+    """
+    selected_object = None
+
+    for obj_type in context['page']['content']:
+        for obj in context['page']['content'][obj_type]:
+            if obj.name == name:
+                selected_object = obj
+                break
+    if selected_object is None:
+        for obj_type in context['page']['content']:
+            for obj in context['page']['ext_content'][obj_type]:
+                if obj.name == name:
+                    selected_object = obj
+                    break
+    return selected_object
 
 @register.assignment_tag(takes_context=True)
 def get_page_object_by_id(context, object_type, oid):
@@ -39,8 +62,6 @@ def get_page_object_by_id(context, object_type, oid):
 
     ``object_type``
         object type
-
-    **Keyword arguments**
 
     ``oid``
         id for object selection
@@ -54,18 +75,18 @@ def get_page_object_by_id(context, object_type, oid):
 
     try:
         for obj in context['page']['content'][object_type]:
-            name = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
-                obj.language, obj.type, context['page']['page'].name, oid
+            sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
+                obj.language, context['page']['page'].name, obj.type, oid
             )
-            if obj.name == name:
+            if obj.sid == sid:
                 selected_object = obj
                 break
         if selected_object is None:
             for obj in context['page']['ext_content'][object_type]:
-                name = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
-                    obj.language, obj.type, context['page']['page'].name, oid
+                sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
+                    obj.language, context['page']['page'].name, obj.type, oid
                 )
-                if obj.name == name:
+                if obj.sid == sid:
                     selected_object = obj
                     break
     except KeyError:

@@ -17,6 +17,7 @@ class PageBaseContent(models.Model):
     type = models.CharField(_('Type'), choices=get_all_content_tuple(), max_length=100, blank=False, db_index=True)
     page = models.ForeignKey('pages.Page', verbose_name=_('Page'))
     language = models.CharField(max_length=5, default=str(settings.PAGES_DEFAULT_LANGUAGE))
+    sid = models.CharField(max_length=200, unique=True)
     name = models.CharField(max_length=200, blank=True, unique=True)
     is_extended = models.BooleanField(_('Extended?'), default=False)
     comment = models.CharField(max_length=250, blank=True)
@@ -31,7 +32,7 @@ class PageBaseContent(models.Model):
 
     def __str__(self):
         """id string of instance"""
-        return '{0:>s}'.format(self.name)
+        return '{0:>s}'.format(self.sid)
 
     def count_objects(self, use_lang=True):
         if use_lang:
@@ -49,15 +50,13 @@ class PageBaseContent(models.Model):
         if self.pk is None:
             self.created_by = self.page.created_by
             self.update_fields(False)
+            count = self.count_objects() + 1
+            self.sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
+                self.language, self.page.name, self.type, count
+            )
         else:
             self.update_fields(True)
-
-        count = self.count_objects()
-        count = count - 1 if count else count
-        self.name = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
-            self.language, self.type, self.page.name, count
-        )
-
+        self.name = self.name if len(self.name) else self.sid
         self.updated_by = self.page.updated_by
 
         # Call parent's ``save`` method

@@ -20,7 +20,7 @@ class PageContent(models.Model):
 
     def __str__(self):
         """id string of instance"""
-        return '{0}:{1}:{2}'.format(self.pk, self.page, self.type)
+        return '{0}:{1}:{2}'.format(self.page, self.type, self.pk)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         """Override the default ``save`` method."""

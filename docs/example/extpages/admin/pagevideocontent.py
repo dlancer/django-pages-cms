@@ -14,6 +14,7 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
         fieldsets = [
             (None, {'fields': [
                 ('language', ),
+                ('name', ),
                 ('video', ),
                 ('title', ),
                 ('description', ),
@@ -21,7 +22,7 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
             ]}),
         ]
 
-        exclude = ('type', 'name', 'is_extended', 'created_by', 'updated_by',)
+        exclude = ('type', 'sid', 'is_extended', 'created_by', 'updated_by',)
         save_on_top = True
         actions_on_bottom = True
 
@@ -31,10 +32,11 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
         model = PageVideoContent
         # max_num = 1
         extra = 1
-        exclude = ('name', 'is_extended', 'created_by', 'updated_by', 'date_created', 'date_updated',)
+        exclude = ('sid', 'is_extended', 'created_by', 'updated_by', 'date_created', 'date_updated',)
         fieldsets = [
             (None, {'fields': [
                 ('language', ),
+                ('name', ),
                 ('video', ),
                 ('title', ),
                 ('description', ),
