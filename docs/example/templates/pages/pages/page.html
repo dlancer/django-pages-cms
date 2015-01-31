@@ -24,8 +24,8 @@
 <br/>
 
 {% cache page.timeout "pages" page.cache_key page.cache_version %}
-    {% page_text_by_id 0 %}
-{#    {% get_page_image_by_id 0 as image %}#}
+    {% page_text_by_id 1 %}
+{#    {% get_page_image_by_id 1 as image %}#}
 {#    <img src="{{ image.url }}" />#}
 {% endcache %}
 
