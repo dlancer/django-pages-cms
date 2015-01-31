@@ -4,7 +4,7 @@
 <html>
 <head lang="{{ LANGUAGE_CODE }}">
     <meta charset="UTF-8">
-    {% get_page_object_by_id "meta" 0 as page_meta %}
+    {% get_page_object_by_id "meta" 1 as page_meta %}
     <title>{{ page_meta.title }}</title>
     <meta name="description" content="{{ page_meta.description }}"/>
     <meta name="keywords" content="{{ page_meta.keywords }}"/>
@@ -13,8 +13,8 @@
 <body>
 
 {% cache page.timeout "pages" page.cache_key page.cache_version %}
-    {% page_text_by_id 0 %}
-    {% get_page_image_by_id 0 as img %}
+    {% page_text_by_id 1 %}
+    {% get_page_image_by_id 1 as img %}
     <img src="{{ img.image }}" alt="{{ img.title }}" />
 {% endcache %}
 
