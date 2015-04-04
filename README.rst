@@ -30,11 +30,11 @@ Requirements
 
     Django>=1.5
     django-appcore==0.0.4
-    django-mptt==0.6.1
+    django-mptt==0.7.0
     django-guardian==1.2.5
     django-image-cropping==0.1.0
     django-markitup==2.2.2
-    django-taggit==0.12.3
+    django-taggit==0.13.0
     easy-thumbnails==2.2
     PyYAML==3.11
     Markdown==2.6.1
