@@ -22,11 +22,11 @@ class PageContent(models.Model):
         """id string of instance"""
         return '{0}:{1}:{2}'.format(self.page, self.type, self.pk)
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(self, *args, **kwargs):
         """Override the default ``save`` method."""
 
         # Call parent's ``save`` method
-        super(PageContent, self).save(force_insert, force_update, using, update_fields)
+        super(PageContent, self).save(*args, **kwargs)
 
     class Meta:
         app_label = 'pages'

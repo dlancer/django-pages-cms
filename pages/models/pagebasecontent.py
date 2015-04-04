@@ -44,7 +44,7 @@ class PageBaseContent(models.Model):
     def update_fields(self, change):
         pass
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(self, *args, **kwargs):
         """Override the default ``save`` method."""
 
         if self.pk is None:
@@ -60,7 +60,7 @@ class PageBaseContent(models.Model):
         self.updated_by = self.page.updated_by
 
         # Call parent's ``save`` method
-        super(PageBaseContent, self).save(force_insert, force_update, using, update_fields)
+        super(PageBaseContent, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True

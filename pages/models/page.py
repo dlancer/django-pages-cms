@@ -61,7 +61,7 @@ class Page(MPTTModel):
         """id string of instance"""
         return self.name
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(self, *args, **kwargs):
         """Override the default ``save`` method."""
 
         now = timezone.now()
@@ -89,7 +89,7 @@ class Page(MPTTModel):
             self.template = self.template.strip()
 
         # Call parent's ``save`` method
-        super(Page, self).save(force_insert, force_update, using, update_fields)
+        super(Page, self).save(*args, **kwargs)
 
     @property
     def is_visible(self):
