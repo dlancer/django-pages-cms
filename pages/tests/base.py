@@ -16,7 +16,8 @@ class PagesCase(TestCase):
         self.factory = RequestFactory()
         self.site_foo = Site.objects.get(id=1)
         self.user_foo = User.objects.create(username='foo', password='bar', email='foo@test.com')
-        self.page_foo = Page.objects.create(name='Test', is_draft=False, is_published=True)
+        self.page_foo = Page.objects.create(name='Test', created_by=self.user_foo,
+                                            updated_by=self.user_foo, is_draft=False, is_published=True)
 
     def tearDown(self):
         self.user_foo.delete()
