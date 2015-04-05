@@ -44,5 +44,5 @@ If you use Django<1.7, you should install South==1.0.2
 Usage
 =====
 
-You may find detailed documentation is in the "docs" directory.
+You may find detailed documentation in the "docs" directory.
 
