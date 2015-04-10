@@ -1,6 +1,6 @@
 Django>=1.6
 django-appcore==0.0.4
-django-mptt==0.7.0
+django-mptt==0.7.1
 django-guardian==1.2.5
 django-image-cropping==1.0.1
 django-markitup==2.2.2
