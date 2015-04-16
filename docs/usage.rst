@@ -92,7 +92,7 @@ These options should be defined in your ``settings.py`` file.
 * ``PAGES_IMAGE_DIR``: directory for images
 * ``PAGES_IMAGE_WIDTH_MAX``: maximum width for images
 * ``PAGES_IMAGE_HEIGHT_MAX``: maximum height for images
-* ``PAGES_DELETE_IMAGE_FILE``: delete image file for deleted image objects
+* ``PAGES_DELETE_IMAGE_FILE``: delete image file for deleted image object
 
 **CMS extended content types settings**
 
@@ -107,9 +107,9 @@ Extended content types
 Extended content types support is disabled by default, if you want use extended content types
 you should setup these options in your django project settings:
 
-``PAGES_PAGE_USE_EXT_CONTENT_TYPES`` = True
-``PAGES_PAGE_EXT_CONTENT_TYPES`` = list(your extend content types models)
-``PAGES_PAGE_EXT_CONTENT_INLINES`` = list(your extend content types inlines for admin panel)
+* ``PAGES_PAGE_USE_EXT_CONTENT_TYPES`` = True
+* ``PAGES_PAGE_EXT_CONTENT_TYPES`` = list(your extend content types models)
+* ``PAGES_PAGE_EXT_CONTENT_INLINES`` = list(your extend content types inlines for admin panel)
 
 You also should add your extended content types to PageContentType table.
 You may use embed video content type realisation in example project as tutorial.
