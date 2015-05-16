@@ -85,7 +85,6 @@ INSTALLED_APPS = (
     'mptt',
     'guardian',
     'markitup',
-    'debug_toolbar',
     'easy_thumbnails',
     'image_cropping',
     'pages',
@@ -101,7 +100,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 
