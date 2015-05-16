@@ -1,3 +1,3 @@
 django>=1.6
-django-pages-cms>=0.1.1
-django-embed-video==0.11
+django-pages-cms>=0.1.2
+django-embed-video==1.0.0
