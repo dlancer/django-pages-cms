@@ -6,8 +6,8 @@ python:
   - "2.7"
 
 env:
-  - DJANGO="django==1.8.2"
-  - DJANGO="django==1.7.8"
+  - DJANGO="django==1.8.3"
+  - DJANGO="django==1.7.9"
   - DJANGO="django==1.6.11"
 
 install:
