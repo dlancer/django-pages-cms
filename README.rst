@@ -7,19 +7,19 @@ Simple content management system for Django 1.6+
     :target: https://travis-ci.org/dlancer/django-pages-cms/
     :alt: Build status
 
-.. image:: https://pypip.in/version/django-pages-cms/badge.svg
+.. image:: https://img.shields.io/pypi/v/django-pages-cms.svg
     :target: https://pypi.python.org/pypi/django-pages-cms/
     :alt: Latest PyPI version
 
-.. image:: https://pypip.in/download/django-pages-cms/badge.svg
+.. image:: https://img.shields.io/pypi/dm/django-pages-cms.svg
     :target: https://pypi.python.org/pypi/django-pages-cms/
     :alt: Number of PyPI downloads
 
-.. image:: https://pypip.in/format/django-pages-cms/badge.svg
+.. image:: https://img.shields.io/pypi/format/django-pages-cms.svg
     :target: https://pypi.python.org/pypi/django-pages-cms/
     :alt: Download format
 
-.. image:: https://pypip.in/license/django-pages-cms/badge.svg
+.. image:: https://img.shields.io/pypi/l/django-pages-cms.svg
     :target: https://pypi.python.org/pypi/django-pages-cms/
     :alt: License
 
