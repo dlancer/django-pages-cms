@@ -42,5 +42,7 @@ class PagesAppConf(AppConf):
     PAGE_EXT_CONTENT_TYPES = getattr(settings, 'PAGES_PAGE_EXT_CONTENT_TYPES', None)
     PAGE_EXT_CONTENT_INLINES = getattr(settings, 'PAGES_PAGE_EXT_CONTENT_INLINES', None)
 
+    PAGE_ACTIVE_CSS_CLASS = getattr(settings, 'PAGES_PAGE_ACTIVE_CSS_CLASS', 'active')
+
     class Meta:
         prefix = 'pages'

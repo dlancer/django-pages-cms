@@ -114,3 +114,8 @@ you should setup these options in your django project settings:
 You also should add your extended content types to PageContentType table.
 You may use embed video content type realisation in example project as tutorial.
 
+
+Another settings
+================
+
+* ``PAGES_PAGE_ACTIVE_CSS_CLASS``: css class name for current active page

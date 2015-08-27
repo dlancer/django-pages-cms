@@ -95,6 +95,40 @@ def get_page_object_by_id(context, object_type, oid):
     return selected_object
 
 
+@register.assignment_tag(takes_context=True)
+def get_page_objects_by_type(context, object_type):
+    """
+    **Arguments**
+
+    ``object_type``
+        object type
+
+    :return selected objects
+    """
+    try:
+        objects = context['page']['content'][object_type]
+    except KeyError:
+        raise template.TemplateSyntaxError('wrong content type: {0:>s}'.format(object_type))
+    return objects
+
+
+@register.assignment_tag(takes_context=True)
+def get_page_objects_by_ext_type(context, object_type):
+    """
+    **Arguments**
+
+    ``object_type``
+        object type
+
+    :return selected objects
+    """
+    try:
+        objects = context['page']['ext_content'][object_type]
+    except KeyError:
+        raise template.TemplateSyntaxError('wrong content type: {0:>s}'.format(object_type))
+    return objects
+
+
 @register.simple_tag(takes_context=True)
 def page_text_by_id(context, oid):
     obj = get_page_object_by_id(context, 'text', oid)
@@ -136,3 +170,14 @@ def get_page_markdown_by_id(context, oid):
 def get_page_image_by_id(context, oid):
     obj = get_page_object_by_id(context, 'image', oid)
     return obj if obj else None
+
+
+@register.simple_tag(takes_context=True)
+def get_page_active_css_class(context, name):
+    css_class = ''
+    try:
+        if context['page']['page'].name == name:
+            css_class = settings.PAGES_PAGE_ACTIVE_CSS_CLASS
+    except KeyError:
+        pass
+    return css_class
