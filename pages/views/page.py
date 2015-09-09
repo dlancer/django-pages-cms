@@ -12,6 +12,8 @@ from django.shortcuts import render
 from django.utils.translation import get_language
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
+from django.utils.translation import activate
 
 from guardian.shortcuts import get_perms
 from appcore.views.mixins import DecoratorChainingMixin
@@ -100,10 +102,17 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
             page_ext_content = cache.get(page_cache_key + 'ext_content', version=cache_version)
 
         else:
-            # try request pages from db and store pages content in cache
+            # try request pages from db and store pages content in the cache
             slugs = PageSlugContent.objects.filter(slug=slug, language=language)
             if not slugs:
+                # try use fallback language for requested page
+                if settings.PAGES_FALLBACK_LANGUAGE != language:
+                    slugs = PageSlugContent.objects.filter(slug=slug, language=settings.PAGES_FALLBACK_LANGUAGE)
+                if slugs:
+                    activate(settings.PAGES_FALLBACK_LANGUAGE)
+                    return HttpResponseRedirect(reverse('page_show', args=(slugs[0],)))
                 raise Http404
+
             slug = slugs[0]
             try:
                 page = Page.objects.published().filter(pk=slug.page_id)[0]
