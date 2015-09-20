@@ -7,13 +7,13 @@ import os
 import base64
 import uuid
 import importlib
+import slugify
 
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-from django.template.defaultfilters import slugify
 
 from image_cropping import ImageCropField
 from image_cropping import ImageRatioField
@@ -46,8 +46,12 @@ class PageSlugContent(PageBaseContent):
     def update_fields(self, change):
         if not change:
             self.type = 'slug'
-            if not self.slug:
-                self.slug = slugify(self.page.name)
+        if not self.slug:
+            self.slug = slugify.slugify(self.page.name,
+                                        only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS)
+        else:
+            self.slug = slugify.slugify(self.slug,
+                                        only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS)
 
     class Meta(PageBaseContent.Meta):
         app_label = 'pages'
@@ -219,7 +223,6 @@ class PageImageContent(PageBaseContent):
 
 
 # Signals handler for deleting files after object record deleted
-# In Django 1.3+, delete a record not remove the associated files
 @receiver(post_delete, sender=PageImageContent)
 def delete_image(sender, **kwargs):
     """Automatically delete image file when records removed."""

@@ -111,11 +111,8 @@ class Page(MPTTModel):
                 cache.incr(cache_key_version, 1)
                 if settings.PAGES_CACHE_DELETE:
                     # try delete cache for anonymous and authenticated users
-                    try:
-                        cache.delete(cache_key + ':' + True, version=cache_version)
-                        cache.delete(cache_key + ':' + False, version=cache_version)
-                    except ValueError:
-                        pass
+                    cache.delete(cache_key + ':' + True, version=cache_version)
+                    cache.delete(cache_key + ':' + False, version=cache_version)
             except ValueError:
                 cache.set(cache_key_version, 0)
 

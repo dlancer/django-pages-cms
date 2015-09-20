@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import unicode_literals
 from django.contrib.auth.models import AnonymousUser
 
@@ -79,5 +80,21 @@ class TestPages(PagesCase):
         view = PageDetailsView.as_view()
         translation.activate('en')
         response = view(request=request, context=context, slug='test')
+        translation.deactivate()
+        self.assertEqual(response.status_code, 200)
+
+    def test_page_with_non_ascii_slug(self):
+        PageSlugContent.objects.create(page=self.page_foo, slug='prüfung')
+        PageMetaContent.objects.create(page=self.page_foo, title='test', description='test', keywords='test')
+        PageTextContent.objects.create(page=self.page_foo, text='test')
+        self.page_foo.template = 'pages/page_text.html'
+        self.page_foo.save()
+        page_url = reverse('page_show', kwargs={'slug': 'prüfung'})
+        request = self.factory.get(page_url)
+        request.user = AnonymousUser()
+        context = RequestContext(request)
+        view = PageDetailsView.as_view()
+        translation.activate('en')
+        response = view(request=request, context=context, slug='prüfung')
         translation.deactivate()
         self.assertEqual(response.status_code, 200)
