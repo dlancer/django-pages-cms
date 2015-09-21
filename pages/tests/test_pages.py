@@ -98,3 +98,22 @@ class TestPages(PagesCase):
         response = view(request=request, context=context, slug='prüfung')
         translation.deactivate()
         self.assertEqual(response.status_code, 200)
+
+    def test_page_fallback_language(self):
+        PageSlugContent.objects.create(page=self.page_foo, slug='test')
+        PageMetaContent.objects.create(page=self.page_foo, title='test', description='test', keywords='test')
+        PageTextContent.objects.create(page=self.page_foo, text='test')
+        self.page_foo.template = 'pages/page_text.html'
+        self.page_foo.save()
+        page_url = '/de' + reverse('page_show', kwargs={'slug': 'test'})
+        request = self.factory.get(page_url)
+        request.user = AnonymousUser()
+        context = RequestContext(request)
+        view = PageDetailsView.as_view()
+        translation.activate('de')
+        response = view(request=request, context=context, slug='test')
+        self.assertEqual(response.status_code, 302)
+        page_url = response.get('location')
+        response = self.client.get(page_url)
+        translation.deactivate()
+        self.assertEqual(response.status_code, 200)

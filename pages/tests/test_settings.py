@@ -10,7 +10,7 @@ ROOT_URLCONF = 'urls'
 SECRET_KEY = 'secretkey'
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -22,6 +22,7 @@ USE_TZ = True
 
 LANGUAGES = (
     ('en', _('English')),
+    ('de', _('German')),
     ('ru', _('Russian')),
 )
 
@@ -56,7 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware'
 )
 

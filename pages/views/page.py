@@ -13,7 +13,6 @@ from django.utils.translation import get_language
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from django.utils.translation import activate
 
 from guardian.shortcuts import get_perms
 from appcore.views.mixins import DecoratorChainingMixin
@@ -109,8 +108,9 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                 if settings.PAGES_FALLBACK_LANGUAGE != language:
                     slugs = PageSlugContent.objects.filter(slug=slug, language=settings.PAGES_FALLBACK_LANGUAGE)
                 if slugs:
-                    activate(settings.PAGES_FALLBACK_LANGUAGE)
-                    return HttpResponseRedirect(reverse('page_show', args=(slugs[0],)))
+                    response = HttpResponseRedirect(reverse('page_show', args=(slugs[0].slug,)))
+                    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
+                    return response
                 raise Http404
 
             slug = slugs[0]
