@@ -18,21 +18,57 @@ class TestPages(PagesCase):
 
     def test_page_slug_model(self):
         PageSlugContent.objects.create(page=self.page_foo, slug='test')
+        obj = PageSlugContent.objects.filter(page=self.page_foo, language='en', slug='test')[0]
+        sid = obj.sid
+        self.assertEqual(sid, 'en:Test:slug:1')
+        obj.language = 'de'
+        obj.save()
+        self.assertEqual(obj.sid, 'de:Test:slug:1')
 
     def test_page_meta_model(self):
         PageMetaContent.objects.create(page=self.page_foo, title='test', description='test', keywords='test')
+        obj = PageMetaContent.objects.filter(page=self.page_foo, language='en')[0]
+        sid = obj.sid
+        self.assertEqual(sid, 'en:Test:meta:1')
+        obj.language = 'de'
+        obj.save()
+        self.assertEqual(obj.sid, 'de:Test:meta:1')
 
     def test_page_redirect_model(self):
         PageRedirectContent.objects.create(page=self.page_foo)
+        obj = PageRedirectContent.objects.filter(page=self.page_foo, language='en')[0]
+        sid = obj.sid
+        self.assertEqual(sid, 'en:Test:redirect:1')
+        obj.language = 'de'
+        obj.save()
+        self.assertEqual(obj.sid, 'de:Test:redirect:1')
 
     def test_page_text_model(self):
         PageTextContent.objects.create(page=self.page_foo, text='test')
+        obj = PageTextContent.objects.filter(page=self.page_foo, language='en')[0]
+        sid = obj.sid
+        self.assertEqual(sid, 'en:Test:text:1')
+        obj.language = 'de'
+        obj.save()
+        self.assertEqual(obj.sid, 'de:Test:text:1')
 
     def test_page_markdown_model(self):
         PageMarkdownContent.objects.create(page=self.page_foo)
+        obj = PageMarkdownContent.objects.filter(page=self.page_foo, language='en')[0]
+        sid = obj.sid
+        self.assertEqual(sid, 'en:Test:markdown:1')
+        obj.language = 'de'
+        obj.save()
+        self.assertEqual(obj.sid, 'de:Test:markdown:1')
 
     def test_page_image_model(self):
         PageImageContent.objects.create(page=self.page_foo)
+        obj = PageImageContent.objects.filter(page=self.page_foo, language='en')[0]
+        sid = obj.sid
+        self.assertEqual(sid, 'en:Test:image:1')
+        obj.language = 'de'
+        obj.save()
+        self.assertEqual(obj.sid, 'de:Test:image:1')
 
     def test_page_text_view(self):
         PageSlugContent.objects.create(page=self.page_foo, slug='test')

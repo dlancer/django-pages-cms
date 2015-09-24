@@ -51,11 +51,10 @@ class PageBaseContent(models.Model):
             self.created_by = self.page.created_by
             self.update_fields(False)
             count = self.count_objects() + 1
-            self.sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
-                self.language, self.page.name, self.type, count
-            )
         else:
             self.update_fields(True)
+            count = int(self.sid.split(':')[-1])
+        self.sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(self.language, self.page.name, self.type, count)
         self.name = self.name if len(self.name) else self.sid
         self.updated_by = self.page.updated_by
 
