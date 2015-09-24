@@ -35,6 +35,7 @@ Requirements
     django-image-cropping>=1.0.1
     django-markitup>=2.2.2
     easy-thumbnails==2.2
+    unicode-slugify>=0.1.3
     PyYAML>=3.11
     Markdown>=2.6.2
 

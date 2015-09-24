@@ -118,4 +118,5 @@ You may use embed video content type realisation in example project as tutorial.
 Another settings
 ================
 
+* ``PAGE_ONLY_ASCII_SLUGS``: do not allow slugs with non ascii symbols
 * ``PAGES_PAGE_ACTIVE_CSS_CLASS``: css class name for current active page
