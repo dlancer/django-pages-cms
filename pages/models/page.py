@@ -1,4 +1,3 @@
-# -*- coding: utf-8
 """Implements Page models"""
 
 from __future__ import unicode_literals
@@ -10,8 +9,11 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.contenttypes.models import ContentType
+from django.utils.encoding import iri_to_uri
+from django.utils.translation import get_language
 
 from mptt.models import MPTTModel, TreeForeignKey
 from guardian.models import UserObjectPermissionBase
@@ -60,6 +62,18 @@ class Page(MPTTModel):
     def __str__(self):
         """id string of instance"""
         return self.name
+
+    def get_absolute_url(self):
+        """absolute url of instance"""
+        content = self.get_content('slug')
+        language = get_language()
+        slug = None
+        for obj in content:
+            if obj.language == language:
+                slug = obj.slug
+                break
+        url = iri_to_uri(reverse('page_show', args=(slug,)))
+        return url
 
     def save(self, *args, **kwargs):
         """Override the default ``save`` method."""

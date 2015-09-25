@@ -1,4 +1,3 @@
-# -*- coding: utf-8
 """Implements page video extended content model"""
 
 from __future__ import unicode_literals

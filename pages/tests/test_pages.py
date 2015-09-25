@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8
 from __future__ import unicode_literals
 from django.contrib.auth.models import AnonymousUser
 
@@ -69,6 +69,15 @@ class TestPages(PagesCase):
         obj.language = 'de'
         obj.save()
         self.assertEqual(obj.sid, 'de:Test:image:1')
+
+    def test_page_absolute_url(self):
+        PageSlugContent.objects.create(page=self.page_foo, slug='test')
+        PageMetaContent.objects.create(page=self.page_foo, title='test', description='test', keywords='test')
+        PageTextContent.objects.create(page=self.page_foo, text='test')
+        self.page_foo.template = 'pages/page_text.html'
+        self.page_foo.save()
+        page_url = self.page_foo.get_absolute_url()
+        self.assertEqual(page_url, '/page/test/')
 
     def test_page_text_view(self):
         PageSlugContent.objects.create(page=self.page_foo, slug='test')
