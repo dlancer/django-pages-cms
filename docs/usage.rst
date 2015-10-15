@@ -60,7 +60,9 @@ These options should be defined in your ``settings.py`` file.
 **CMS general settings**
 
 * ``PAGES_DEFAULT_LANGUAGE``: default translation language
+
 * ``PAGES_FALLBACK_LANGUAGE``: fallback translation language
+* ``FALLBACK_LANGUAGE_COOKIE_NAME``: fallback translation language cookie name
 
 * ``PAGES_ALLOW_DJANGO_TEMPLATES``: allow use Django template tags
 
