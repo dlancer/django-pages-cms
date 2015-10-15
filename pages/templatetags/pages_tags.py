@@ -42,17 +42,20 @@ def get_page_object_by_name(context, name):
     """
     selected_object = None
 
-    for obj_type in context['page']['content']:
-        for obj in context['page']['content'][obj_type]:
-            if obj.name == name:
-                selected_object = obj
-                break
-    if selected_object is None:
+    try:
         for obj_type in context['page']['content']:
-            for obj in context['page']['ext_content'][obj_type]:
+            for obj in context['page']['content'][obj_type]:
                 if obj.name == name:
                     selected_object = obj
                     break
+        if selected_object is None:
+            for obj_type in context['page']['content']:
+                for obj in context['page']['ext_content'][obj_type]:
+                    if obj.name == name:
+                        selected_object = obj
+                        break
+    except TypeError:
+        pass
     return selected_object
 
 
@@ -75,21 +78,24 @@ def get_page_object_by_id(context, object_type, oid):
     selected_object = None
 
     try:
-        for obj in context['page']['content'][object_type]:
-            sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
-                obj.language, context['page']['page'].name, obj.type, oid
-            )
-            if obj.sid == sid:
-                selected_object = obj
-                break
-        if selected_object is None:
-            for obj in context['page']['ext_content'][object_type]:
+        try:
+            for obj in context['page']['content'][object_type]:
                 sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
                     obj.language, context['page']['page'].name, obj.type, oid
                 )
                 if obj.sid == sid:
                     selected_object = obj
                     break
+            if selected_object is None:
+                for obj in context['page']['ext_content'][object_type]:
+                    sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
+                        obj.language, context['page']['page'].name, obj.type, oid
+                    )
+                    if obj.sid == sid:
+                        selected_object = obj
+                        break
+        except TypeError:
+            pass
     except KeyError:
         raise template.TemplateSyntaxError('wrong content type: {0:>s}'.format(object_type))
     return selected_object
