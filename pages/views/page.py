@@ -66,14 +66,15 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
             raise Http404
 
         language = get_language_from_request(request, check_path=True)
-        use_language = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME, None)
-        use_fallback_language = request.COOKIES.get(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, None)
 
-        if use_fallback_language is not None and use_language != language:
-            translation.activate(settings.PAGES_FALLBACK_LANGUAGE)
-            response = HttpResponseRedirect(reverse('page_show', args=(slug,)))
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
-            return response
+        if settings.PAGES_USE_FALLBACK_LANGUAGE:
+            use_language = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME, None)
+            use_fallback_language = request.COOKIES.get(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, None)
+            if use_fallback_language is not None and use_language != language:
+                translation.activate(settings.PAGES_FALLBACK_LANGUAGE)
+                response = HttpResponseRedirect(reverse('page_show', args=(slug,)))
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
+                return response
 
         page_cache_key = settings.PAGES_PAGE_CACHE_KEY + language + ':' + slug + ':' + is_authenticated
         page_cache_version_key = settings.PAGES_PAGE_VERSION_KEY + language + ':' + slug
@@ -113,15 +114,16 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
             # try request pages from db and store pages content in the cache
             slugs = PageSlugContent.objects.filter(slug=slug, language=language)
             if not slugs:
-                # try use fallback language for requested page
-                if settings.PAGES_FALLBACK_LANGUAGE != language:
-                    slugs = PageSlugContent.objects.filter(slug=slug, language=settings.PAGES_FALLBACK_LANGUAGE)
-                if slugs:
-                    translation.activate(settings.PAGES_FALLBACK_LANGUAGE)
-                    response = HttpResponseRedirect(reverse('page_show', args=(slugs[0].slug,)))
-                    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
-                    response.set_cookie(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
-                    return response
+                if settings.PAGES_USE_FALLBACK_LANGUAGE:
+                    # try use fallback language for requested page
+                    if settings.PAGES_FALLBACK_LANGUAGE != language:
+                        slugs = PageSlugContent.objects.filter(slug=slug, language=settings.PAGES_FALLBACK_LANGUAGE)
+                    if slugs:
+                        translation.activate(settings.PAGES_FALLBACK_LANGUAGE)
+                        response = HttpResponseRedirect(reverse('page_show', args=(slugs[0].slug,)))
+                        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
+                        response.set_cookie(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
+                        return response
                 raise Http404
 
             slug = slugs[0]

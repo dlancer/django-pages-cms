@@ -61,6 +61,7 @@ These options should be defined in your ``settings.py`` file.
 
 * ``PAGES_DEFAULT_LANGUAGE``: default translation language
 
+* ``PAGES_USE_FALLBACK_LANGUAGE``: use fallback translation language
 * ``PAGES_FALLBACK_LANGUAGE``: fallback translation language
 * ``FALLBACK_LANGUAGE_COOKIE_NAME``: fallback translation language cookie name
 

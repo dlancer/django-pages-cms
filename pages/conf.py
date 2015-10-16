@@ -5,6 +5,7 @@ from appconf import AppConf
 class PagesAppConf(AppConf):
     DEFAULT_LANGUAGE = getattr(settings, 'PAGES_DEFAULT_LANGUAGE', 'en')
 
+    USE_FALLBACK_LANGUAGE = getattr(settings, 'PAGES_USE_FALLBACK_LANGUAGE', True)
     FALLBACK_LANGUAGE = getattr(settings, 'PAGES_FALLBACK_LANGUAGE', 'en')
     FALLBACK_LANGUAGE_COOKIE_NAME = getattr(settings, 'PAGES_FALLBACK_LANGUAGE', 'pages_fallback_language')
 
