@@ -21,7 +21,6 @@ You must add these apps to your list of ``INSTALLED_APPS`` in ``settings.py``::
         'pages',
     )
 
-If you use Django<1.7, you should add ``south`` to ``INSTALLED_APPS``.
 
 Include content management system URLconf in your project urls.py like this::
 
