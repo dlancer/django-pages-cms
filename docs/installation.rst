@@ -14,7 +14,6 @@ Also you can install the development version running this command::
 
     $ pip install -e git+http://github.com/dlancer/django-pages-cms.git#egg=pages-dev
 
-If you use Django<1.7, you should install South==1.0.1
 
 Setuptools
 ----------

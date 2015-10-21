@@ -31,7 +31,7 @@ Include content management system URLconf in your project urls.py like this::
         url(r'^page/', include('pages.urls')),
     )
 
-Run ``python manage.py syncdb`` for Django < 1.7 or ``python manage.py migrate`` for django 1.7+.
+Run ``python manage.py migrate`` for django 1.7+.
 This creates the appropriate tables in your database that are necessary for operation.
 
 After database creation you must load standard content types to database from provided fixtures::
@@ -42,7 +42,6 @@ After database creation you must load standard content types to database from pr
 Database migration
 ------------------
 
-If you use Django<1.7 you can use database migration by add South application to your django settings.
 Django 1.7+ has native database migration support.
 
 Multilingual support

@@ -1,7 +1,7 @@
-Simple content management system for Django 1.6+
+Simple content management system for Django 1.7+
 ================================================
 
-``django-pages-cms`` is a simple content management system for Django 1.6+
+``django-pages-cms`` is a simple content management system for Django 1.7+
 
 .. image:: https://travis-ci.org/dlancer/django-pages-cms.svg?branch=master
     :target: https://travis-ci.org/dlancer/django-pages-cms/
@@ -28,7 +28,7 @@ Requirements
 
 ::
 
-    Django>=1.6
+    Django>=1.7
     django-appcore>=0.0.6
     django-mptt>=0.7.4
     django-guardian>=1.3
@@ -39,7 +39,6 @@ Requirements
     PyYAML>=3.11
     Markdown>=2.6.2
 
-If you use Django<1.7, you should install South==1.0.2
 
 Usage
 =====
