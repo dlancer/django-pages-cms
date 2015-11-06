@@ -198,7 +198,7 @@ def on_save(sender, instance, using, **kwargs):
 
 @receiver(pre_delete, sender=Page)
 def on_delete(sender, instance, using, **kwargs):
-     if isinstance(instance, Page):
+    if isinstance(instance, Page):
         instance.invalidate()
 
 
