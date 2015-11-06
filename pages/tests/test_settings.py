@@ -52,6 +52,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -80,3 +86,5 @@ ANONYMOUS_USER_ID = -1
 
 # MarkItUp settings
 MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': False, 'extensions': ['extra', 'meta', 'nl2br']})
+
+PAGES_CACHE_DELETE = True

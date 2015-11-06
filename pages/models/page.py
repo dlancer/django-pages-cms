@@ -122,14 +122,25 @@ class Page(MPTTModel):
             cache_key = settings.PAGES_PAGE_CACHE_KEY + obj.language + ':' + obj.slug
             cache_key_version = settings.PAGES_PAGE_VERSION_KEY + obj.language + ':' + obj.slug
             cache_version = str(cache.get(cache_key_version))
+            if cache_version is None:
+                cache.set(cache_key_version, 1, settings.PAGES_PAGE_CACHE_TIMEOUT)
+                cache_version = 1
             try:
                 cache.incr(cache_key_version, 1)
                 if settings.PAGES_CACHE_DELETE:
                     # try delete cache for anonymous and authenticated users
-                    cache.delete(cache_key + ':' + True, version=cache_version)
-                    cache.delete(cache_key + ':' + False, version=cache_version)
+                    cache_key_yauth = cache_key + ':' + 'True'
+                    cache_key_nauth = cache_key + ':' + 'False'
+                    cache.delete(cache_key_yauth, version=cache_version)
+                    cache.delete(cache_key_nauth, version=cache_version)
+                    cache.delete(cache_key_yauth + 'content', version=cache_version)
+                    cache.delete(cache_key_nauth + 'content', version=cache_version)
+                    cache.delete(cache_key_yauth + 'ext_content', version=cache_version)
+                    cache.delete(cache_key_nauth + 'ext_content', version=cache_version)
+                    cache.delete(cache_key_yauth + 'redirect', version=cache_version)
+                    cache.delete(cache_key_nauth + 'redirect', version=cache_version)
             except ValueError:
-                cache.set(cache_key_version, 0)
+                cache.set(cache_key_version, 1, settings.PAGES_PAGE_CACHE_TIMEOUT)
 
     @staticmethod
     def get_content_class(content_type):
@@ -187,15 +198,8 @@ def on_save(sender, instance, using, **kwargs):
 
 @receiver(pre_delete, sender=Page)
 def on_delete(sender, instance, using, **kwargs):
-    if isinstance(instance, Page):
-        content = instance.get_content('slug')
-        for obj in content:
-            slug = obj.full_slug
-            cache_key = settings.PAGES_PAGE_CACHE_KEY + slug
-            cache_key_version = settings.PAGES_PAGE_VERSION_KEY + slug
-            cache_version = str(cache.get(cache_key_version))
-            cache.delete(cache_key + cache_version)
-            cache.delete(cache_key_version)
+     if isinstance(instance, Page):
+        instance.invalidate()
 
 
 class PageUserObjectPermission(UserObjectPermissionBase):

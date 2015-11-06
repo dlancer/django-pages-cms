@@ -31,7 +31,7 @@ def get_timestamp(slug, language):
     page_cache_version_key = settings.PAGES_PAGE_VERSION_KEY + language + ':' + slug
     timestamp_cache_key = settings.PAGES_PAGE_CACHE_KEY + language + ':' + slug + '_timestamp'
     cache_version = cache.get(page_cache_version_key)
-    cache_version = 0 if cache_version is None else cache_version
+    cache_version = 1 if cache_version is None else cache_version
     timestamp = cache.get(timestamp_cache_key, version=cache_version)
     if timestamp is None:
         timestamp = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -79,9 +79,9 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
         page_cache_key = settings.PAGES_PAGE_CACHE_KEY + language + ':' + slug + ':' + is_authenticated
         page_cache_version_key = settings.PAGES_PAGE_VERSION_KEY + language + ':' + slug
 
-        # try get cached pages
+        # try get cached page
         cache_version = cache.get(page_cache_version_key)
-        cache_version = 0 if cache_version is None else cache_version
+        cache_version = 1 if cache_version is None else cache_version
         page = cache.get(page_cache_key, version=cache_version)
 
         if page:
@@ -131,8 +131,8 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                 page = Page.objects.published().filter(pk=slug.page_id)[0]
 
                 # cache pages content
-                cache.set(page_cache_version_key, cache_version)
-                cache.set(page_cache_key, page, version=cache_version)
+                cache.set(page_cache_version_key, cache_version, settings.PAGES_PAGE_CACHE_TIMEOUT)
+                cache.set(page_cache_key, page, settings.PAGES_PAGE_CACHE_TIMEOUT, version=cache_version)
 
                 # check if login required
                 if page.is_login_required and not request.user.is_authenticated():
@@ -159,7 +159,8 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                         'url': redirect.get_redirect_url(request),
                         'permanent': redirect.is_permanent
                     })
-                    cache.set(page_cache_key + 'redirect', page_redirect, version=cache_version)
+                    cache.set(page_cache_key + 'redirect', page_redirect,
+                              settings.PAGES_PAGE_CACHE_TIMEOUT, version=cache_version)
                     if page_redirect['permanent']:
                         return HttpResponsePermanentRedirect(page_redirect['url'])
                     else:
@@ -182,9 +183,11 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                                 page_ext_content.update({content_type.type: ext_content})
 
                 if page_content:
-                    cache.set(page_cache_key + 'content', page_content, version=cache_version)
+                    cache.set(page_cache_key + 'content', page_content,
+                              settings.PAGES_PAGE_CACHE_TIMEOUT, version=cache_version)
                 if page_ext_content:
-                    cache.set(page_cache_key + 'ext_content', page_ext_content, version=cache_version)
+                    cache.set(page_cache_key + 'ext_content', page_ext_content,
+                              settings.PAGES_PAGE_CACHE_TIMEOUT, version=cache_version)
 
             except IndexError:
                 raise Http404
