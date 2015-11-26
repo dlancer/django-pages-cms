@@ -80,8 +80,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    # should be enabled only for django < 1.7
-    # 'south',
     'mptt',
     'guardian',
     'markitup',
@@ -158,13 +156,6 @@ THUMBNAIL_PROCESSORS = ('image_cropping.thumbnail_processors.crop_corners', ) + 
 # image_cropping
 IMAGE_CROPPING_THUMB_SIZE = (400, 400)
 IMAGE_CROPPING_SIZE_WARNING = True
-
-# remove south settings for django 1.7+
-SOUTH_MIGRATION_MODULES = {
-    'easy_thumbnails': 'easy_thumbnails.south_migrations',
-    'pages': 'pages.south_migrations',
-}
-
 
 # MarkItUp settings
 MARKITUP_MEDIA_URL = STATIC_URL
