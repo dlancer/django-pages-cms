@@ -10,7 +10,7 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.http import condition
 from django.shortcuts import render
 from django.utils import translation
-from django.utils.translation import get_language_from_request
+from django.utils.translation import get_language
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
@@ -42,7 +42,7 @@ def get_timestamp(slug, language):
 def get_etag(request, **kwargs):
     is_authenticated = str(request.user.is_authenticated())
     slug = kwargs.get('slug', None)
-    language = get_language_from_request(request, check_path=True)
+    language = get_language()
     modified = get_timestamp(slug, language)
     etag_bytes = (modified + language + is_authenticated).encode('utf-8')
     return md5(etag_bytes).hexdigest()
@@ -50,7 +50,7 @@ def get_etag(request, **kwargs):
 
 def get_last_modified(request, **kwargs):
     slug = kwargs.get('slug', None)
-    language = get_language_from_request(request, check_path=True)
+    language = get_language()
     modified = get_timestamp(slug, language)
     return datetime.strptime(modified, '%Y-%m-%d %H:%M:%S')
 
@@ -65,14 +65,17 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
         if slug is None:
             raise Http404
 
-        language = get_language_from_request(request, check_path=True)
+        language = get_language()
 
         if settings.PAGES_USE_FALLBACK_LANGUAGE:
             use_language = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME, None)
             use_fallback_language = request.COOKIES.get(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, None)
             if use_fallback_language is not None and use_language != language:
                 translation.activate(settings.PAGES_FALLBACK_LANGUAGE)
-                response = HttpResponseRedirect(reverse('page_show', args=(slug,)))
+                if slug == settings.PAGES_HOME_PAGE_SLUG:
+                    response = HttpResponseRedirect('/')
+                else:
+                    response = HttpResponseRedirect(reverse('page_show', args=(slug,)))
                 response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
                 return response
 
@@ -120,7 +123,10 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                         slugs = PageSlugContent.objects.filter(slug=slug, language=settings.PAGES_FALLBACK_LANGUAGE)
                     if slugs:
                         translation.activate(settings.PAGES_FALLBACK_LANGUAGE)
-                        response = HttpResponseRedirect(reverse('page_show', args=(slugs[0].slug,)))
+                        if slugs[0].slug == settings.PAGES_HOME_PAGE_SLUG:
+                            response = HttpResponseRedirect('/')
+                        else:
+                            response = HttpResponseRedirect(reverse('page_show', args=(slugs[0].slug,)))
                         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
                         response.set_cookie(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
                         return response

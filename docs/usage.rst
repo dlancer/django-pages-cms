@@ -76,6 +76,7 @@ These options should be defined in your ``settings.py`` file.
 * ``PAGES_TEMPLATE_403``: template for 403 HTTP ERROR page
 
 * ``PAGES_PAGE_SLUG_NAME``: slug name used in urls.py
+* ``PAGES_HOME_PAGE_SLUG``: home page slug, for proper redirection to home page
 
 **CMS caching settings**
 
