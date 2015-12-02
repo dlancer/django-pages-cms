@@ -28,8 +28,8 @@ Requirements
 
 ::
 
-    Django>=1.7
-    django-appcore>=0.0.6
+    Django>=1.7,<1.9
+    django-appcore>=0.0.7
     django-mptt>=0.7.4
     django-guardian>=1.3.2
     django-image-cropping>=1.0.1
