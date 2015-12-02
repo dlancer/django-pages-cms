@@ -18,8 +18,8 @@ class PagesAppConf(AppConf):
     RENDER_403 = getattr(settings, 'PAGES_RENDER_403', False)
     TEMPLATE_403 = getattr(settings, 'PAGES_TEMPLATE_403', 'pages/403.html')
 
-    HOME_PAGE_SLUG = getattr(settings, 'PAGES_HOME_PAGE_SLUG', 'home')
     PAGE_SLUG_NAME = getattr(settings, 'PAGES_PAGE_SLUG_NAME', 'slug')
+    HOME_PAGE_SLUG = getattr(settings, 'PAGES_HOME_PAGE_SLUG', 'home')
 
     CACHE_BACKEND = getattr(settings, 'PAGES_CACHE_BACKEND', 'default')
     CACHE_PREFIX = getattr(settings, 'PAGES_CACHE_PREFIX', 'pages_')
