@@ -8,13 +8,10 @@ test_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 sys.path.insert(0, test_dir)
 
 import django
+from django.test.runner import DiscoverRunner as TestRunner
+
 if django.get_version() >= '1.7':
     django.setup()
-
-if django.get_version() < '1.6':
-    from django.test.simple import DjangoTestSuiteRunner as TestRunner
-else:
-    from django.test.runner import DiscoverRunner as TestRunner
 
 
 def runtests():
