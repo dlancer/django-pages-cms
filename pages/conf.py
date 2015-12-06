@@ -34,13 +34,15 @@ class PagesAppConf(AppConf):
     FILE_UPLOAD_PERMISSIONS = getattr(
         settings, 'PAGES_FILE_UPLOAD_PERMISSIONS', settings.FILE_UPLOAD_PERMISSIONS)
 
-    if getattr(settings, 'FILE_UPLOAD_DIRECTORY_PERMISSIONS', False):
-        FILE_UPLOAD_DIRECTORY_PERMISSIONS = getattr(
+    FILE_UPLOAD_DIRECTORY_PERMISSIONS = getattr(
             settings, 'PAGES_FILE_UPLOAD_DIRECTORY_PERMISSIONS', settings.FILE_UPLOAD_DIRECTORY_PERMISSIONS)
 
-    IMAGE_DIR = getattr(settings, 'PAGES_IMAGE_DIR', 'pages')
+    FILE_OVERWRITE_EXISTS = getattr(settings, 'PAGES_FILE_OVERWRITE_EXISTS', True)
+
+    IMAGE_DIR = getattr(settings, 'PAGES_IMAGE_DIR', 'pages/images')
     IMAGE_WIDTH_MAX = getattr(settings, 'PAGES_IMAGE_WIDTH_MAX', 600)
     IMAGE_HEIGHT_MAX = getattr(settings, 'PAGES_IMAGE_HEIGHT_MAX', 800)
+    IMAGE_USE_ORIGINAL_FILENAME = getattr(settings, 'PAGE_IMAGE_USE_ORIGINAL_FILENAME', False)
     DELETE_IMAGE_FILE = getattr(settings, 'PAGES_DELETE_IMAGE_FILE', False)
 
     PAGE_USE_EXT_CONTENT_TYPES = getattr(settings, 'PAGES_PAGE_USE_EXT_CONTENT_TYPES', False)

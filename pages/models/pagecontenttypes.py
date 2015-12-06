@@ -169,24 +169,31 @@ image_file_storage = PageFileSystemStorage()
 
 
 def make_image_upload_path(instance, filename, prefix=False):
-    """Generate upload path and new filename for pages image"""
+    """Generate upload path and filename for image"""
 
     # store original filename
     instance.filename = filename
-    # always generate unique name, for security reason
+    ext = os.path.splitext(filename)[1].strip('.').lower()
+
+    # always generate unique path, for security and file system balancing reasons
     file_uuid = uuid.uuid4().hex
 
     # generate short sha1 based hash
     name_sha = hashlib.sha1(file_uuid).digest()
     name_hash = base64.urlsafe_b64encode(name_sha[:9]).decode('utf-8')
 
+    if settings.PAGES_IMAGE_USE_ORIGINAL_FILENAME:
+        name = image_file_storage.get_available_name(os.path.splitext(filename)[0])
+    else:
+        name = name_hash
+
     return u'{path}/{sub0}/{sub1}/{sub2}/{name}.{ext}'.format(
         path=settings.PAGES_IMAGE_DIR,
         sub0=file_uuid[0:2],
         sub1=file_uuid[7:9],
         sub2=file_uuid[12:14],
-        name=name_hash,
-        ext=os.path.splitext(filename)[1].strip('.').lower()
+        name=name,
+        ext=ext
     )
 
 
