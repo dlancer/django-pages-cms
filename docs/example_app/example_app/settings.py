@@ -1,5 +1,5 @@
 """
-Django settings for django_pages_cms_test project.
+Django settings for example_app project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -105,9 +105,9 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_DIRS = tuple([os.path.join(BASE_DIR, app_name, 'templates') for app_name in INSTALLED_APPS])
 TEMPLATE_DIRS += tuple([os.path.join(BASE_DIR, 'templates')])
 
-ROOT_URLCONF = 'django_pages_cms_test.urls'
+ROOT_URLCONF = 'example_app.urls'
 
-WSGI_APPLICATION = 'django_pages_cms_test.wsgi.application'
+WSGI_APPLICATION = 'example_app.wsgi.application'
 
 
 # Database

@@ -104,11 +104,11 @@ These options should be defined in your ``settings.py`` file.
 
 **CMS image type settings**
 
-* ``PAGES_IMAGE_DIR``: directory for images
+* ``PAGES_IMAGE_DIR``: directory for images (default: 'pages/images')
 * ``PAGES_IMAGE_WIDTH_MAX``: maximum width for images
 * ``PAGES_IMAGE_HEIGHT_MAX``: maximum height for images
 * ``PAGES_IMAGE_USE_ORIGINAL_FILENAME``: use original filename for uploading image (default: False)
-* ``PAGES_DELETE_IMAGE_FILE``: delete image file for deleted image object
+* ``PAGES_DELETE_IMAGE_FILE``: delete image file for deleted image object (default: False)
 
 **CMS extended content types settings**
 
@@ -129,7 +129,7 @@ you should setup these options in your Django project settings:
 
 You also should add your extended content types to PageContentType table.
 
-You may use embed video content type realisation in example project. You may find it in the docs/example directory.
+You may use embed video content type realisation in example project. You may find it in the docs/example_app directory.
 Or you can use ``django-pages-cms-extensions`` package as full tutorial.
 
 
