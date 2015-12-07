@@ -1,5 +1,6 @@
 {% load cache i18n %}
 {% load pages_tags %}
+{% load extpages_tags %}
 <!DOCTYPE html>
 <html>
 <head lang="{{ LANGUAGE_CODE }}">
@@ -29,6 +30,7 @@
 
 {% cache page.timeout "pages" page.cache_key page.cache_version %}
     {% page_text_by_id 1 %}
+    {% page_video_by_id 1 %}
 {% endcache %}
 
 </body>
