@@ -1,6 +1,8 @@
 {% load cache i18n %}
 {% load pages_tags %}
 {% load extpages_tags %}
+{% load embed_video_tags %}
+
 <!DOCTYPE html>
 <html>
 <head lang="{{ LANGUAGE_CODE }}">
@@ -13,24 +15,15 @@
 </head>
 <body>
 
-<form action="{% url 'set_language' %}" method="post">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ redirect_to }}"/>
-    <select name="language">
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %}
-            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                {{ language.name_local }} ({{ language.code }})
-            </option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="{% trans "Set" %}"/>
-</form>
-<br/>
-
 {% cache page.timeout "pages" page.cache_key page.cache_version %}
     {% page_text_by_id 1 %}
-    {% page_video_by_id 1 %}
+    {% get_page_video_by_id 1 as item %}
+    {% video item.video as example_video %}
+        URL: {{ example_video.url }}
+        Thumbnail: {{ example_video.thumbnail }}
+        Backend: {{ example_video.backend }}
+        {% video example_video "large" %}
+    {% endvideo %}
 {% endcache %}
 
 </body>
