@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('language', models.CharField(default=b'en', max_length=5)),
                 ('sid', models.CharField(unique=True, max_length=200)),
                 ('name', models.CharField(unique=True, max_length=200, blank=True)),
-                ('is_extended', models.BooleanField(default=False, verbose_name='Extended?')),
+                ('is_extended', models.BooleanField(default=True, verbose_name='Extended?')),
                 ('comment', models.CharField(max_length=250, blank=True)),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Created')),
                 ('date_updated', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Updated')),
