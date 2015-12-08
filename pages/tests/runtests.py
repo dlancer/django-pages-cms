@@ -10,8 +10,7 @@ sys.path.insert(0, test_dir)
 import django
 from django.test.runner import DiscoverRunner as TestRunner
 
-if django.get_version() >= '1.7':
-    django.setup()
+django.setup()
 
 
 def runtests():
