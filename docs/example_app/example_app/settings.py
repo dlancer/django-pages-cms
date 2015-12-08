@@ -163,3 +163,8 @@ MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': False, 'extensions': ['ext
 MARKITUP_SET = 'markitup/sets/markdown'
 MARKITUP_SKIN = 'markitup/skins/simple'
 MARKITUP_AUTO_PREVIEW = True
+
+
+# pages
+PAGES_PAGE_USE_EXT_CONTENT_TYPES = True
+PAGES_PAGE_EXT_CONTENT_TYPES = ('extpages.models.pagevideocontent', )

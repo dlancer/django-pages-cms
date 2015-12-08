@@ -10,7 +10,7 @@ def page_video_by_id(context, oid):
     obj = get_page_object_by_id(context, 'video', oid)
     if obj is None:
         return None
-    return obj.text
+    return obj
 
 
 @register.assignment_tag(takes_context=True)
