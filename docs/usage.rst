@@ -130,8 +130,8 @@ you should setup these options in your Django project settings:
 You also should add your extended content types to PageContentType table.
 
 You may use embed video content type realisation in example project. You may find it in the docs/example_app directory.
-Or you can use ``django-pages-cms-extensions`` package as full tutorial.
-
+You also can use ``django-pages-cms-extensions`` application as full tutorial.
+You can find ``django-pages-cms-extensions`` here: http://github.com/dlancer/django-pages-cms-extensions
 
 Another settings
 ================
