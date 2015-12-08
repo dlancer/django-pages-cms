@@ -184,10 +184,10 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                         ext_content_types = PageContentType.objects.extended()
                         for content_type in ext_content_types:
                             content_class = Page.get_content_class(content_type.type)
-                            ext_content = content_class.objects.filter(page=page, language=language)
-                            if ext_content:
-                                page_ext_content.update({content_type.type: ext_content})
-
+                            if content_class:
+                                ext_content = content_class.objects.filter(page=page, language=language)
+                                if ext_content:
+                                    page_ext_content.update({content_type.type: ext_content})
                 if page_content:
                     cache.set(page_cache_key + 'content', page_content,
                               settings.PAGES_PAGE_CACHE_TIMEOUT, version=cache_version)

@@ -152,17 +152,14 @@ class Page(MPTTModel):
                 if not issubclass(content_class, pagecontenttypes.PageBaseContent):
                     content_class = None
             except AttributeError:
-                try:
-                    if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
-                        if pagecontenttypes.PAGE_EXT_CONTENT_TYPES is not None:
-                            for module in pagecontenttypes.PAGE_EXT_CONTENT_TYPES:
+                if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
+                    if pagecontenttypes.PAGE_EXT_CONTENT_TYPES is not None:
+                        for module in pagecontenttypes.PAGE_EXT_CONTENT_TYPES:
+                            if hasattr(module, content_type.class_name):
                                 content_class = getattr(module, content_type.class_name)
                                 if not issubclass(content_class, pagecontenttypes.PageBaseContent):
                                     content_class = None
-                                else:
-                                    break
-                except AttributeError:
-                    pass
+                                break
         return content_class
 
     def get_template(self):

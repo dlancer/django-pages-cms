@@ -86,7 +86,11 @@ def get_page_object_by_id(context, object_type, oid):
                 if obj.sid == sid:
                     selected_object = obj
                     break
-            if selected_object is None:
+        except TypeError:
+            pass
+    except KeyError:
+        try:
+            try:
                 for obj in context['page']['ext_content'][object_type]:
                     sid = '{0:>s}:{1:>s}:{2:>s}:{3:>d}'.format(
                         obj.language, context['page']['page'].name, obj.type, oid
@@ -94,10 +98,10 @@ def get_page_object_by_id(context, object_type, oid):
                     if obj.sid == sid:
                         selected_object = obj
                         break
-        except TypeError:
-            pass
-    except KeyError:
-        raise template.TemplateSyntaxError('wrong content type: {0:>s}'.format(object_type))
+            except TypeError:
+                pass
+        except KeyError:
+            raise template.TemplateSyntaxError('wrong content type: {0:>s}'.format(object_type))
     return selected_object
 
 
