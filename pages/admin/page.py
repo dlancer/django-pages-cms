@@ -82,16 +82,17 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
                 class_name = content_type.admin_class_name
                 try:
                     content_class = getattr(pagecontenttypes, class_name)
-                    if not (issubclass(content_class, admin.TabularInline)
-                            or issubclass(content_class, admin.StackedInline)):
+                    if not (issubclass(content_class, admin.TabularInline) or
+                            issubclass(content_class, admin.StackedInline)):
                         content_class = None
                 except AttributeError:
                     try:
                         if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
                             for module in PAGE_EXT_CONTENT_INLINES:
-                                content_class = getattr(module, class_name)
-                                if not (issubclass(content_class, admin.TabularInline)
-                                        or issubclass(content_class, admin.StackedInline)):
+                                if hasattr(module, class_name):
+                                    content_class = getattr(module, class_name)
+                                if not (issubclass(content_class, admin.TabularInline) or
+                                        issubclass(content_class, admin.StackedInline)):
                                     content_class = None
                                 else:
                                     break
