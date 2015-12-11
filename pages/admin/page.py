@@ -30,7 +30,7 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
 class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
     change_form_template = 'admin/pages/page/change_form.html'
     list_display = ['__str__',
-                    # 'status',
+                    'ptype',
                     'date_created_short', 'date_updated_short', 'date_approved_short',
                     'date_publication_short', 'date_publication_end_short']
     list_display_links = ['__str__']
@@ -44,6 +44,7 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
 
     page_fields = [
         ('name', ),
+        ('ptype', ),
         ('parent', ),
         ('template', ),
     ]
@@ -152,12 +153,6 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
         message = _('{0} successfully marked as not published.').format(self.__get_message_bit(rows_updated))
         self.message_user(request, message)
     make_not_published.short_description = _('Mark selected pages as not published')
-
-    # def status(obj):
-    # # ('is_draft', 'is_approved', 'is_published'),
-    # return 'STATUS'
-    # status.short_description = _('Status')
-    # status.admin_order_field = 'date_created'
 
     def date_created_short(self, obj):
         return obj.date_created.strftime('%Y/%m/%d %H:%M:%S')

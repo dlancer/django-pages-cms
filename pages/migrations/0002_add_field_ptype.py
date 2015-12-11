@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='page',
             name='ptype',
-            field=models.CharField(default='page', max_length=64),
+            field=models.CharField(verbose_name='Type', default='page', max_length=64),
         ),
     ]

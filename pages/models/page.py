@@ -31,7 +31,7 @@ from pages.models import pagecontenttypes
 @python_2_unicode_compatible
 class Page(MPTTModel):
     name = models.CharField(max_length=200, unique=True)
-    ptype = models.CharField(max_length=64, default='page')
+    ptype = models.CharField(_('Type'), max_length=64, default='page')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     template = models.CharField(max_length=254, blank=True)
     comment = models.TextField(max_length=254, blank=True)
