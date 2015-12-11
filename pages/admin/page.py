@@ -30,8 +30,7 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
 class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
     change_form_template = 'admin/pages/page/change_form.html'
     list_display = ['__str__',
-                    'ptype',
-                    'date_created_short', 'date_updated_short', 'date_approved_short',
+                    'ptype', 'date_created_short', 'date_updated_short', 'date_approved_short',
                     'date_publication_short', 'date_publication_end_short']
     list_display_links = ['__str__']
 
@@ -41,6 +40,7 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
                'make_published', 'make_not_published']
     save_on_top = True
     actions_on_bottom = True
+    mptt_indent_field = '__str__'
 
     page_fields = [
         ('name', ),
