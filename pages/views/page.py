@@ -198,7 +198,8 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
             except IndexError:
                 raise Http404
 
-        context = {
+        context = self.get_context_data(**kwargs)
+        context.update({
             'page': {
                 'page': page,
                 'slug': slug,
@@ -208,7 +209,6 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                 'cache_version': cache_version,
                 'timeout': settings.PAGES_PAGE_CACHE_TIMEOUT,
             }
-
-        }
+        })
 
         return render(request, page.get_template(), context)

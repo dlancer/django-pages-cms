@@ -138,3 +138,11 @@ Another settings
 
 * ``PAGE_ONLY_ASCII_SLUGS``: do not allow slugs with non ascii symbols
 * ``PAGES_PAGE_ACTIVE_CSS_CLASS``: css class name for current active page
+
+
+Add any data to page context
+============================
+
+You can add any data to your pages. Just subclass PageDetailsView, override get_context_data method,
+and your data will be added to page context before rendering. You can use this for create special pages,
+i.e. for add pagination support to your page.
