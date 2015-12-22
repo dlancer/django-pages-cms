@@ -6,5 +6,5 @@ from pages.views import PageDetailsView
 
 urlpatterns = patterns('pages.views',
                        # pages
-                       url(r'^(?P<slug>[-\w]+)/$', PageDetailsView.as_view(), name='page_show'),
+                       url(r'^(?P<slug>[-\w]+)/$', PageDetailsView.as_view(), name='show'),
                        )

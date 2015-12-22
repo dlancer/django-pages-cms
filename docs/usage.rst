@@ -24,11 +24,8 @@ You must add these apps to your list of ``INSTALLED_APPS`` in ``settings.py``::
 
 Include content management system URLconf in your project urls.py like this::
 
-    urlpatterns = patterns(
-    '',
-        ...
-        url(r'^page/', include('pages.urls')),
-    )
+    urlpatterns = i18n_patterns('',
+                                 url(r'^pages/', include('pages.urls', namespace='pages')),)
 
 Run ``python manage.py migrate``.
 This creates the appropriate tables in your database that are necessary for operation.
