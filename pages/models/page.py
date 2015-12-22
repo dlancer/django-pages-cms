@@ -73,7 +73,7 @@ class Page(MPTTModel):
             if obj.language == language:
                 slug = obj.slug
                 break
-        url = iri_to_uri(reverse('page_show', args=(slug,)))
+        url = iri_to_uri(reverse('pages:show', args=(slug,)))
         return url
 
     def save(self, *args, **kwargs):

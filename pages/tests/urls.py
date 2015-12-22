@@ -1,8 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url, include
+from django.conf.urls.i18n import i18n_patterns
 
-from pages.views import PageDetailsView
-
-urlpatterns = patterns('pages.views',
-    # pages
-    url(r'^page/(?P<slug>[-\w]+)/$', PageDetailsView.as_view(), name='page_show'),
-)
+urlpatterns = i18n_patterns(url(r'^page/', include('pages.urls', namespace='pages')), )

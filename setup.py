@@ -23,7 +23,7 @@ setup(
     include_package_data=True,
     install_requires=reqs,
     license='BSD',
-    description='Simple content management system for Django 1.7+',
+    description='Simple content management system for Django 1.8+',
     long_description=README,
     url='https://github.com/dlancer/django-pages-cms',
     author='dlancer',

@@ -1,7 +1,7 @@
-Simple content management system for Django 1.7+
+Simple content management system for Django 1.8+
 ================================================
 
-``django-pages-cms`` is a simple content management system for Django 1.7+
+``django-pages-cms`` is a simple content management system for Django 1.8+
 
 .. image:: https://travis-ci.org/dlancer/django-pages-cms.svg?branch=master
     :target: https://travis-ci.org/dlancer/django-pages-cms/
@@ -28,9 +28,9 @@ Requirements
 
 ::
 
-    Django>=1.7,<1.9
+    Django>=1.8,<1.9
     django-appcore>=0.0.7
-    django-mptt>=0.7.4
+    django-mptt>=0.8
     django-guardian>=1.3.2
     django-image-cropping>=1.0.2
     django-markitup>=2.2.2

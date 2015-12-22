@@ -78,7 +78,7 @@ class TestPages(PagesCase):
         self.page_foo.template = 'pages/page_text.html'
         self.page_foo.save()
         page_url = self.page_foo.get_absolute_url()
-        self.assertEqual(page_url, '/page/test/')
+        self.assertEqual(page_url, '/en/page/test/')
         self.page_foo.delete()
         cache.clear()
 
@@ -88,7 +88,7 @@ class TestPages(PagesCase):
         PageTextContent.objects.create(page=self.page_foo, text='test')
         self.page_foo.template = 'pages/page_text.html'
         self.page_foo.save()
-        page_url = reverse('page_show', kwargs={'slug': 'test'})
+        page_url = reverse('pages:show', kwargs={'slug': 'test'})
         request = self.factory.get(page_url)
         request.user = AnonymousUser()
         context = RequestContext(request)
@@ -106,7 +106,7 @@ class TestPages(PagesCase):
         PageTextContent.objects.create(page=self.page_foo, text='test')
         self.page_foo.template = 'pages/page_text.html'
         self.page_foo.save()
-        page_url = reverse('page_show', kwargs={'slug': 'test'})
+        page_url = reverse('pages:show', kwargs={'slug': 'test'})
         request = self.factory.get(page_url)
         request.user = AnonymousUser()
         context = RequestContext(request)
@@ -132,7 +132,7 @@ class TestPages(PagesCase):
         PageMarkdownContent.objects.create(page=self.page_foo, text='**test**')
         self.page_foo.template = 'pages/page_markdown.html'
         self.page_foo.save()
-        page_url = reverse('page_show', kwargs={'slug': 'test'})
+        page_url = reverse('pages:show', kwargs={'slug': 'test'})
         request = self.factory.get(page_url)
         request.user = AnonymousUser()
         context = RequestContext(request)
@@ -151,7 +151,7 @@ class TestPages(PagesCase):
         PageImageContent.objects.create(page=self.page_foo, image='img/test.jpg', title='test')
         self.page_foo.template = 'pages/page_image.html'
         self.page_foo.save()
-        page_url = reverse('page_show', kwargs={'slug': 'test'})
+        page_url = reverse('pages:show', kwargs={'slug': 'test'})
         request = self.factory.get(page_url)
         request.user = AnonymousUser()
         context = RequestContext(request)
@@ -169,7 +169,7 @@ class TestPages(PagesCase):
         PageTextContent.objects.create(page=self.page_foo, text='test')
         self.page_foo.template = 'pages/page_text.html'
         self.page_foo.save()
-        page_url = reverse('page_show', kwargs={'slug': 'prüfung'})
+        page_url = reverse('pages:show', kwargs={'slug': 'prüfung'})
         request = self.factory.get(page_url)
         request.user = AnonymousUser()
         context = RequestContext(request)
@@ -187,7 +187,7 @@ class TestPages(PagesCase):
         PageTextContent.objects.create(page=self.page_foo, text='test')
         self.page_foo.template = 'pages/page_text.html'
         self.page_foo.save()
-        page_url = '/de' + reverse('page_show', kwargs={'slug': 'test'})
+        page_url = '/de' + reverse('pages:show', kwargs={'slug': 'test'})
         request = self.factory.get(page_url)
         request.user = AnonymousUser()
         context = RequestContext(request)

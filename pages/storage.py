@@ -47,28 +47,15 @@ class PageBaseFileSystemStorage(FileSystemStorage):
         FileSystemStorage.delete(self, name)
         self.__log('File ' + name + ' deleted.')
 
-# compatibility with django 1.7
-if django.VERSION[:2] >= (1, 8):
-    class PageFileSystemStorage(PageBaseFileSystemStorage):
 
-        def get_available_name(self, name, max_length=None):
-            # If the filename already exists, remove it as if it was a true file system
-            if settings.PAGES_FILE_OVERWRITE_EXISTS:
-                if self.exists(name):
-                    self.__log('File ' + name + ' exists, rewrite used.')
-                    os.remove(os.path.join(settings.MEDIA_ROOT, name))
-            else:
-                name = FileSystemStorage.get_available_name(self, name, max_length)
-            return name
-else:
-    class PageFileSystemStorage(PageBaseFileSystemStorage):
+class PageFileSystemStorage(PageBaseFileSystemStorage):
 
-        def get_available_name(self, name):
-            # If the filename already exists, remove it as if it was a true file system
-            if settings.PAGES_FILE_OVERWRITE_EXISTS:
-                if self.exists(name):
-                    self.__log('File ' + name + ' exists, rewrite used.')
-                    os.remove(os.path.join(settings.MEDIA_ROOT, name))
-            else:
-                name = FileSystemStorage.get_available_name(self, name)
-            return name
+    def get_available_name(self, name, max_length=None):
+        # If the filename already exists, remove it as if it was a true file system
+        if settings.PAGES_FILE_OVERWRITE_EXISTS:
+            if self.exists(name):
+                self.__log('File ' + name + ' exists, rewrite used.')
+                os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        else:
+            name = FileSystemStorage.get_available_name(self, name, max_length)
+        return name

@@ -75,7 +75,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                 if slug == settings.PAGES_HOME_PAGE_SLUG:
                     response = HttpResponseRedirect('/')
                 else:
-                    response = HttpResponseRedirect(reverse('page_show', args=(slug,)))
+                    response = HttpResponseRedirect(reverse('pages:show', args=(slug,)))
                 response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
                 return response
 
@@ -126,7 +126,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                         if slugs[0].slug == settings.PAGES_HOME_PAGE_SLUG:
                             response = HttpResponseRedirect('/')
                         else:
-                            response = HttpResponseRedirect(reverse('page_show', args=(slugs[0].slug,)))
+                            response = HttpResponseRedirect(reverse('pages:show', args=(slugs[0].slug,)))
                         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
                         response.set_cookie(settings.PAGES_FALLBACK_LANGUAGE_COOKIE_NAME, settings.PAGES_FALLBACK_LANGUAGE)
                         return response
