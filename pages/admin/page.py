@@ -66,10 +66,15 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
         ], 'classes': ['collapse']}),
     ]
 
+    def get_default_ptype(self):
+        return 'page'
+
     def get_form(self, request, obj=None, **kwargs):
         # just save obj reference for future processing in Inline
         request._obj_ = obj
-        return super(PageAdmin, self).get_form(request, obj, **kwargs)
+        form = super(PageAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['ptype'].initial = self.get_default_ptype()
+        return form
 
     def get_all_content_inlines(self, object_id):
         inlines = []
