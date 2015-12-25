@@ -55,7 +55,7 @@ class PageSlugContent(PageBaseContent):
                 title = meta.title
             except PageMetaContent.DoesNotExist:
                 pass
-        if not title:
+        if not len(title):
             title = self.page.name
         self.slug = orig = slugify.slugify(
                 title, only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS
