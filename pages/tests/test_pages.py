@@ -163,6 +163,47 @@ class TestPages(PagesCase):
         self.page_foo.delete()
         cache.clear()
 
+    def test_page_slug_uniques(self):
+        PageSlugContent.objects.create(page=self.page_foo, slug='test')
+        PageSlugContent.objects.create(page=self.page_foo2, slug='test')
+        PageSlugContent.objects.create(page=self.page_foo3, slug='test')
+        PageSlugContent.objects.create(page=self.page_foo4, slug='test', language='de')
+        obj = PageSlugContent.objects.filter(page=self.page_foo2, language='en', slug='test-1')[0]
+        self.assertEqual(obj.slug, 'test-1')
+        obj = PageSlugContent.objects.filter(page=self.page_foo3, language='en', slug='test-2')[0]
+        self.assertEqual(obj.slug, 'test-2')
+        obj = PageSlugContent.objects.filter(page=self.page_foo4, language='de', slug='test')[0]
+        self.assertEqual(obj.slug, 'test')
+
+    def test_page_slug_from_meta_title(self):
+        PageMetaContent.objects.create(page=self.page_foo, title='test title')
+        PageSlugContent.objects.create(page=self.page_foo, slug='')
+        obj = PageSlugContent.objects.filter(page=self.page_foo, language='en', slug='test-title')[0]
+        self.assertEqual(obj.slug, 'test-title')
+
+    def test_page_slug_from_meta_intl_title(self):
+        PageMetaContent.objects.create(page=self.page_foo5, title='prüfung title', language='de')
+        PageSlugContent.objects.create(page=self.page_foo5, slug='', language='de')
+        obj = PageSlugContent.objects.filter(page=self.page_foo5, language='de', slug='prüfung-title')[0]
+        self.assertEqual(obj.slug, 'prüfung-title')
+
+        PageMetaContent.objects.create(page=self.page_foo5, title='тест title', language='ru')
+        PageSlugContent.objects.create(page=self.page_foo5, slug='', language='ru')
+        obj = PageSlugContent.objects.filter(page=self.page_foo5, language='ru', slug='тест-title')[0]
+        self.assertEqual(obj.slug, 'тест-title')
+
+        settings.PAGES_PAGE_ONLY_ASCII_SLUGS = True
+        PageMetaContent.objects.create(page=self.page_foo6, title='prüfung title', language='de')
+        PageSlugContent.objects.create(page=self.page_foo6, slug='', language='de')
+        obj = PageSlugContent.objects.filter(page=self.page_foo6, language='de', slug='prufung-title')[0]
+        self.assertEqual(obj.slug, 'prufung-title')
+
+        PageMetaContent.objects.create(page=self.page_foo6, title='тест title', language='ru')
+        PageSlugContent.objects.create(page=self.page_foo6, slug='', language='ru')
+        obj = PageSlugContent.objects.filter(page=self.page_foo6, language='ru', slug='test-title')[0]
+        self.assertEqual(obj.slug, 'test-title')
+        settings.PAGES_PAGE_ONLY_ASCII_SLUGS = False
+
     def test_page_with_non_ascii_slug(self):
         PageSlugContent.objects.create(page=self.page_foo, slug='prüfung')
         PageMetaContent.objects.create(page=self.page_foo, title='test', description='test', keywords='test')

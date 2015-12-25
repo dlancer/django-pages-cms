@@ -7,6 +7,7 @@ import base64
 import uuid
 import importlib
 import slugify
+import itertools
 
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -22,8 +23,8 @@ from pages.conf import settings
 from pages.models.pagebasecontent import PageBaseContent
 from pages.storage import PageFileSystemStorage
 
-
 PAGE_EXT_CONTENT_TYPES = []
+PAGE_MAX_SLUG_LENGTH = 245
 
 if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
     if settings.PAGES_PAGE_EXT_CONTENT_TYPES is not None:
@@ -35,7 +36,7 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
 
 
 class PageSlugContent(PageBaseContent):
-    slug = models.CharField(max_length=245)
+    slug = models.CharField(max_length=PAGE_MAX_SLUG_LENGTH)
     objects = models.Manager()
 
     @property
@@ -45,12 +46,27 @@ class PageSlugContent(PageBaseContent):
     def update_fields(self, change):
         if not change:
             self.type = 'slug'
-        if not self.slug:
-            self.slug = slugify.slugify(self.page.name,
-                                        only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS)
-        else:
-            self.slug = slugify.slugify(self.slug,
-                                        only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS)
+
+    def save(self, *args, **kwargs):
+        title = self.slug
+        if settings.PAGES_PAGE_USE_META_TITLE_FOR_SLUG:
+            try:
+                meta = PageMetaContent.objects.get(page=self.page, language=self.language)
+                title = meta.title
+            except PageMetaContent.DoesNotExist:
+                pass
+        if not title:
+            title = self.page.name
+        self.slug = orig = slugify.slugify(
+                title, only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS
+        )[:PAGE_MAX_SLUG_LENGTH]
+        for x in itertools.count(1):
+            if not PageSlugContent.objects.exclude(
+                    page=self.page
+            ).filter(slug=self.slug, language=self.language).exists():
+                break
+            self.slug = '{0:s}-{1:d}'.format(orig[:PAGE_MAX_SLUG_LENGTH - len(str(x)) - 1], x)
+        super(PageSlugContent, self).save(*args, **kwargs)
 
     class Meta(PageBaseContent.Meta):
         app_label = 'pages'
@@ -188,19 +204,19 @@ def make_image_upload_path(instance, filename, prefix=False):
         name = name_hash
 
     return u'{path}/{sub0}/{sub1}/{sub2}/{name}.{ext}'.format(
-        path=settings.PAGES_IMAGE_DIR,
-        sub0=file_uuid[0:2],
-        sub1=file_uuid[7:9],
-        sub2=file_uuid[12:14],
-        name=name,
-        ext=ext
+            path=settings.PAGES_IMAGE_DIR,
+            sub0=file_uuid[0:2],
+            sub1=file_uuid[7:9],
+            sub2=file_uuid[12:14],
+            name=name,
+            ext=ext
     )
 
 
 class PageImageContent(PageBaseContent):
     image = ImageCropField(blank=True, null=True, upload_to=make_image_upload_path, storage=image_file_storage)
     cropping = ImageRatioField('image', '{0:>s}x{1:>s}'.format(
-        str(settings.PAGES_IMAGE_WIDTH_MAX), str(settings.PAGES_IMAGE_HEIGHT_MAX)), allow_fullsize=True)
+            str(settings.PAGES_IMAGE_WIDTH_MAX), str(settings.PAGES_IMAGE_HEIGHT_MAX)), allow_fullsize=True)
     title = models.CharField(max_length=250, blank=True)
     tags = models.CharField(max_length=250, blank=True)
     objects = models.Manager()
