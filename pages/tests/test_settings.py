@@ -1,10 +1,9 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 SITE_ID = 1
 
 BASE_DIR = os.path.dirname(__file__)
-
-from django.utils.translation import ugettext_lazy as _
 
 ROOT_URLCONF = 'urls'
 SECRET_KEY = 'secretkey'
