@@ -1,0 +1,5 @@
+* v0.2.0 (01/18/2016):
+
+ - Django 1.9 support added
+
+ This release is not compatible with previous django-pages-cms versions
