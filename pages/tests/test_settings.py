@@ -5,6 +5,11 @@ SITE_ID = 1
 
 BASE_DIR = os.path.dirname(__file__)
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+STATIC_ROOT = os.path.join(BASE_DIR, 'web/static')
+
+STATIC_URL = '/static/'
+
 ROOT_URLCONF = 'urls'
 SECRET_KEY = 'secretkey'
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
