@@ -33,10 +33,4 @@
     class_name: PageMarkdownContent
     admin_class_name: PageMarkdownContentInline
 
-- model: pages.pagecontenttype
-  pk: 6
-  fields:
-    type: image
-    class_name: PageImageContent
-    admin_class_name: PageImageContentInline
 

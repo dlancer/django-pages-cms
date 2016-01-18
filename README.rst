@@ -32,9 +32,7 @@ Requirements
     django-appcore>=0.0.7
     django-mptt>=0.8
     django-guardian>=1.3.2
-    django-image-cropping>=1.0.2
     django-markitup>=2.2.2
-    easy-thumbnails>=2.3
     unicode-slugify>=0.1.3
     PyYAML>=3.11
     Markdown>=2.6.5

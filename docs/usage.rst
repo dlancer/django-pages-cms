@@ -16,8 +16,6 @@ You must add these apps to your list of ``INSTALLED_APPS`` in ``settings.py``::
         'guardian',
         'mptt',
         'markitup',
-        'easy_thumbnails',
-        'image_cropping',
         'pages',
     )
 
@@ -90,21 +88,6 @@ These options should be defined in your ``settings.py`` file.
 * ``PAGES_PAGE_CACHE_TIMEOUT``: default page cache timeout
 
 * ``PAGES_PAGE_HTTP_MAX_AGE``: default page http max age
-
-**CMS file system settings**
-
-* ``FILE_LOCATION``: directory for uploading files (default is Django MEDIA_ROOT)
-* ``FILE_UPLOAD_PERMISSIONS``: permissions for uploading files
-* ``FILE_UPLOAD_DIRECTORY_PERMISSIONS``: permissions for uploading directory
-* ``FILE_OVERWRITE_EXISTS``: overwrite file with existed filename (default: True)
-
-**CMS image type settings**
-
-* ``PAGES_IMAGE_DIR``: directory for images (default: 'pages/images')
-* ``PAGES_IMAGE_WIDTH_MAX``: maximum width for images
-* ``PAGES_IMAGE_HEIGHT_MAX``: maximum height for images
-* ``PAGES_IMAGE_USE_ORIGINAL_FILENAME``: use original filename for uploading image (default: False)
-* ``PAGES_DELETE_IMAGE_FILE``: delete image file for deleted image object (default: False)
 
 **CMS extended content types settings**
 

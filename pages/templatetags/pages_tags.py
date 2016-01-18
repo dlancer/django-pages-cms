@@ -176,12 +176,6 @@ def get_page_markdown_by_id(context, oid):
     return page_markdown_by_id(context, oid)
 
 
-@register.assignment_tag(takes_context=True)
-def get_page_image_by_id(context, oid):
-    obj = get_page_object_by_id(context, 'image', oid)
-    return obj if obj else None
-
-
 @register.simple_tag(takes_context=True)
 def get_page_active_css_class(context, name):
     css_class = ''

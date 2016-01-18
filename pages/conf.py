@@ -30,21 +30,6 @@ class PagesAppConf(AppConf):
 
     PAGE_HTTP_MAX_AGE = getattr(settings, 'PAGES_PAGE_CACHE_TIMEOUT', 3600)  # timeout 1 hour by default
 
-    FILE_LOCATION = getattr(settings, 'PAGES_FILE_LOCATION', settings.MEDIA_ROOT)
-    FILE_UPLOAD_PERMISSIONS = getattr(
-        settings, 'PAGES_FILE_UPLOAD_PERMISSIONS', settings.FILE_UPLOAD_PERMISSIONS)
-
-    FILE_UPLOAD_DIRECTORY_PERMISSIONS = getattr(
-            settings, 'PAGES_FILE_UPLOAD_DIRECTORY_PERMISSIONS', settings.FILE_UPLOAD_DIRECTORY_PERMISSIONS)
-
-    FILE_OVERWRITE_EXISTS = getattr(settings, 'PAGES_FILE_OVERWRITE_EXISTS', True)
-
-    IMAGE_DIR = getattr(settings, 'PAGES_IMAGE_DIR', 'pages/images')
-    IMAGE_WIDTH_MAX = getattr(settings, 'PAGES_IMAGE_WIDTH_MAX', 600)
-    IMAGE_HEIGHT_MAX = getattr(settings, 'PAGES_IMAGE_HEIGHT_MAX', 800)
-    IMAGE_USE_ORIGINAL_FILENAME = getattr(settings, 'PAGE_IMAGE_USE_ORIGINAL_FILENAME', False)
-    DELETE_IMAGE_FILE = getattr(settings, 'PAGES_DELETE_IMAGE_FILE', False)
-
     PAGE_USE_EXT_CONTENT_TYPES = getattr(settings, 'PAGES_PAGE_USE_EXT_CONTENT_TYPES', False)
     PAGE_EXT_CONTENT_TYPES = getattr(settings, 'PAGES_PAGE_EXT_CONTENT_TYPES', None)
     PAGE_EXT_CONTENT_INLINES = getattr(settings, 'PAGES_PAGE_EXT_CONTENT_INLINES', None)

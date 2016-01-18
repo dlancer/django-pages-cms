@@ -5,4 +5,3 @@ from pages.admin.pagecontenttypes import PageSlugContentAdmin
 from pages.admin.pagecontenttypes import PageRedirectContentAdmin
 from pages.admin.pagecontenttypes import PageMetaContentAdmin
 from pages.admin.pagecontenttypes import PageTextContentAdmin
-from pages.admin.pagecontenttypes import PageImageContentAdmin

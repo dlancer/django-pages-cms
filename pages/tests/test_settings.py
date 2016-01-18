@@ -36,8 +36,6 @@ INSTALLED_APPS = (
     'guardian',
     'mptt',
     'markitup',
-    'easy_thumbnails',
-    'image_cropping',
     'pages',
 )
 

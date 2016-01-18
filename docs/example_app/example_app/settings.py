@@ -83,10 +83,7 @@ INSTALLED_APPS = (
     'mptt',
     'guardian',
     'markitup',
-    'easy_thumbnails',
-    'image_cropping',
     'pages',
-    'extpages',
 )
 
 
@@ -142,20 +139,6 @@ AUTHENTICATION_BACKENDS = (
 
 ANONYMOUS_USER_ID = -1
 
-
-# easy_thumbnails
-# save thumbnail images to a sub-directory relative to the source image.
-THUMBNAIL_DEBUG = DEBUG
-THUMBNAIL_SUBDIR = 'thumbs'
-THUMBNAIL_QUALITY = 95
-
-from easy_thumbnails.conf import settings as thumbnail_settings
-
-THUMBNAIL_PROCESSORS = ('image_cropping.thumbnail_processors.crop_corners', ) + thumbnail_settings.THUMBNAIL_PROCESSORS
-
-# image_cropping
-IMAGE_CROPPING_THUMB_SIZE = (400, 400)
-IMAGE_CROPPING_SIZE_WARNING = True
 
 # MarkItUp settings
 MARKITUP_MEDIA_URL = STATIC_URL
