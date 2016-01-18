@@ -28,7 +28,7 @@ Requirements
 
 ::
 
-    Django>=1.8,<1.9
+    Django>=1.8
     django-appcore>=0.0.7
     django-mptt>=0.8
     django-guardian>=1.3.2
