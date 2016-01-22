@@ -1,3 +1,7 @@
+* v0.2.1 (01/23/2016):
+
+ -  requirements updated to the latest packages with proper Django 1.9 support
+
 * v0.2.0 (01/18/2016):
 
  - Django 1.9 support added
