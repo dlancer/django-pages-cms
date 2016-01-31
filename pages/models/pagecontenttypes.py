@@ -39,14 +39,15 @@ class PageSlugContent(PageBaseContent):
 
     def save(self, *args, **kwargs):
         title = self.slug
-        if settings.PAGES_PAGE_USE_META_TITLE_FOR_SLUG:
-            try:
-                meta = PageMetaContent.objects.get(page=self.page, language=self.language)
-                title = meta.title
-            except PageMetaContent.DoesNotExist:
-                pass
         if not len(title):
-            title = self.page.name
+            if settings.PAGES_PAGE_USE_META_TITLE_FOR_SLUG:
+                try:
+                    meta = PageMetaContent.objects.get(page=self.page, language=self.language)
+                    title = meta.title
+                except PageMetaContent.DoesNotExist:
+                    pass
+            else:
+                title = self.page.name
         self.slug = orig = slugify.slugify(
                 title, only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS
         )[:PAGE_MAX_SLUG_LENGTH]
