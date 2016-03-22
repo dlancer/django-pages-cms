@@ -33,7 +33,7 @@ Requirements
     django-mptt>=0.8
     django-guardian>=1.4.1
     django-markitup>=2.3.0
-    unicode-slugify>=0.1.3
+    python-slugify>=1.2.0
     PyYAML>=3.11
     Markdown>=2.6.5
 

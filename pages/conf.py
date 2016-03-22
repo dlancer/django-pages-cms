@@ -34,7 +34,6 @@ class PagesAppConf(AppConf):
     PAGE_EXT_CONTENT_TYPES = getattr(settings, 'PAGES_PAGE_EXT_CONTENT_TYPES', None)
     PAGE_EXT_CONTENT_INLINES = getattr(settings, 'PAGES_PAGE_EXT_CONTENT_INLINES', None)
 
-    PAGE_ONLY_ASCII_SLUGS = getattr(settings, 'PAGES_PAGE_ONLY_ASCII_SLUGS', False)
     PAGE_USE_META_TITLE_FOR_SLUG = getattr(settings, 'PAGES_PAGE_USE_META_TITLE_FOR_SLUG', True)
     PAGE_ACTIVE_CSS_CLASS = getattr(settings, 'PAGES_PAGE_ACTIVE_CSS_CLASS', 'active')
 

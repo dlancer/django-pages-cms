@@ -48,9 +48,7 @@ class PageSlugContent(PageBaseContent):
                     pass
             else:
                 title = self.page.name
-        self.slug = orig = slugify.slugify(
-                title, only_ascii=settings.PAGES_PAGE_ONLY_ASCII_SLUGS
-        )[:PAGE_MAX_SLUG_LENGTH]
+        self.slug = orig = slugify.slugify(title)[:PAGE_MAX_SLUG_LENGTH]
         for x in itertools.count(1):
             if not PageSlugContent.objects.exclude(
                     page=self.page

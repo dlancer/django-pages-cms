@@ -155,43 +155,13 @@ class TestPages(PagesCase):
     def test_page_slug_from_meta_intl_title(self):
         PageMetaContent.objects.create(page=self.page_foo5, title='prüfung title', language='de')
         PageSlugContent.objects.create(page=self.page_foo5, slug='', language='de')
-        obj = PageSlugContent.objects.filter(page=self.page_foo5, language='de', slug='prüfung-title')[0]
-        self.assertEqual(obj.slug, 'prüfung-title')
+        obj = PageSlugContent.objects.filter(page=self.page_foo5, language='de', slug='prufung-title')[0]
+        self.assertEqual(obj.slug, 'prufung-title')
 
         PageMetaContent.objects.create(page=self.page_foo5, title='тест title', language='ru')
         PageSlugContent.objects.create(page=self.page_foo5, slug='', language='ru')
-        obj = PageSlugContent.objects.filter(page=self.page_foo5, language='ru', slug='тест-title')[0]
-        self.assertEqual(obj.slug, 'тест-title')
-
-        settings.PAGES_PAGE_ONLY_ASCII_SLUGS = True
-        PageMetaContent.objects.create(page=self.page_foo6, title='prüfung title', language='de')
-        PageSlugContent.objects.create(page=self.page_foo6, slug='', language='de')
-        obj = PageSlugContent.objects.filter(page=self.page_foo6, language='de', slug='prufung-title')[0]
-        self.assertEqual(obj.slug, 'prufung-title')
-
-        PageMetaContent.objects.create(page=self.page_foo6, title='тест title', language='ru')
-        PageSlugContent.objects.create(page=self.page_foo6, slug='', language='ru')
-        obj = PageSlugContent.objects.filter(page=self.page_foo6, language='ru', slug='test-title')[0]
+        obj = PageSlugContent.objects.filter(page=self.page_foo5, language='ru', slug='test-title')[0]
         self.assertEqual(obj.slug, 'test-title')
-        settings.PAGES_PAGE_ONLY_ASCII_SLUGS = False
-
-    def test_page_with_non_ascii_slug(self):
-        PageSlugContent.objects.create(page=self.page_foo, slug='prüfung')
-        PageMetaContent.objects.create(page=self.page_foo, title='test', description='test', keywords='test')
-        PageTextContent.objects.create(page=self.page_foo, text='test')
-        self.page_foo.template = 'pages/page_text.html'
-        self.page_foo.save()
-        page_url = reverse('pages:show', kwargs={'slug': 'prüfung'})
-        request = self.factory.get(page_url)
-        request.user = AnonymousUser()
-        context = RequestContext(request)
-        view = PageDetailsView.as_view()
-        translation.activate('en')
-        response = view(request=request, context=context, slug='prüfung')
-        translation.deactivate()
-        self.assertEqual(response.status_code, 200)
-        self.page_foo.delete()
-        cache.clear()
 
     def test_page_fallback_language(self):
         PageSlugContent.objects.create(page=self.page_foo, slug='test')

@@ -109,7 +109,6 @@ You can find ``django-pages-cms-extensions`` here: http://github.com/dlancer/dja
 Another settings
 ================
 
-* ``PAGES_PAGE_ONLY_ASCII_SLUGS``: allow slugs only with ascii symbols (default: False)
 * ``PAGES_PAGE_USE_META_TITLE_FOR_SLUG``: use title from page meta for slug generation (default: True)
 * ``PAGES_PAGE_ACTIVE_CSS_CLASS``: css class name for current active page
 
