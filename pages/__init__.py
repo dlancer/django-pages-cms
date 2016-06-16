@@ -1,4 +1,4 @@
-VERSION = (0, 2, 6, 'stable')
+VERSION = (0, 2, 7, 'dev')
 
 
 def get_release():
