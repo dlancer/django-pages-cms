@@ -29,13 +29,13 @@ Requirements
 ::
 
     Django>=1.8
-    django-appcore>=0.0.8
-    django-mptt>=0.8
-    django-guardian>=1.4.1
-    django-markitup>=2.3.0
+    django-appcore>=0.0.9
+    django-mptt>=0.8.4
+    django-guardian>=1.4.4
+    django-markitup>=2.3.1
     python-slugify>=1.2.0
     PyYAML>=3.11
-    Markdown>=2.6.5
+    Markdown>=2.6.6
 
 
 Usage
