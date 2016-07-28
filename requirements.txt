@@ -1,6 +1,6 @@
 Django>=1.8
 django-appcore>=0.0.9
-django-mptt>=0.8.4
+django-mptt>=0.8.5
 django-guardian>=1.4.4
 django-markitup>=2.3.1
 python-slugify>=1.2.0

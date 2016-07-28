@@ -7,12 +7,12 @@ python:
   - "2.7"
 
 env:
-  - DJANGO="django==1.8.13"
+  - DJANGO="django==1.8.14"
 
 matrix:
   include:
     - python: "3.5"
-      env: DJANGO="django==1.9.7"
+      env: DJANGO="django==1.9.8"
 
 install:
   - pip install $DJANGO
