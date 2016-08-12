@@ -37,6 +37,11 @@ Database migration
 
 Django 1.7+ has native database migration support.
 
+Django 1.10+ support
+--------------------
+
+Django 1.10+ not supported at the moment
+
 Multilingual support
 --------------------
 
