@@ -25,6 +25,7 @@ from pages.conf import settings
 from pages.cache import cache
 from pages.managers import PageManager
 from pages.models.pagecontenttype import PageContentType
+from pages.models.pagedefaultcontent import PageDefaultContent
 from pages.models import pagecontenttypes
 
 
@@ -34,6 +35,12 @@ class Page(MPTTModel):
     ptype = models.CharField(_('Type'), max_length=64, default='page')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     template = models.CharField(max_length=254, blank=True)
+    default_content = models.ForeignKey(
+        PageDefaultContent,
+        related_name='page_default_content',
+        null=True,
+        blank=True
+    )
     comment = models.TextField(max_length=254, blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_creator', null=True)
     updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_editor', null=True)

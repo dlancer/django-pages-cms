@@ -1,6 +1,7 @@
 from pages.models.page import Page
 from pages.models.page import PageUserObjectPermission, PageGroupObjectPermission
 from pages.models.pagecontent import PageContent
+from pages.models.pagedefaultcontent import PageDefaultContent
 from pages.models.pagecontenttype import PageContentType
 from pages.models.pagecontenttypes import PageSlugContent
 from pages.models.pagecontenttypes import PageRedirectContent

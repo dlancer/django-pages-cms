@@ -47,6 +47,7 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
         ('ptype', ),
         ('parent', ),
         ('template', ),
+        ('default_content',),
     ]
 
     if hasattr(settings, 'SITE_ID'):
@@ -204,8 +205,18 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
         """
         if not change:
             obj.created_by = request.user
-
         obj.updated_by = request.user
         obj.save()
+        ctypes = obj.default_content.get_content_types()
+        for ctype in ctypes:
+            pctype = PageContentType.objects.get(type=ctype)
+            if pctype is not None:
+                try:
+                    PageContent.objects.get(page=obj, type__type=ctype)
+                except PageContent.DoesNotExist:
+                    PageContent.objects.create(
+                        page=obj,
+                        type=pctype
+                    )
 
 admin.site.register(Page, PageAdmin)
