@@ -123,3 +123,21 @@ Add any data to page context
 You can add any data to your pages. Just subclass PageDetailsView, override get_context_data method,
 and your data will be added to page context before rendering. You can use this for create special pages,
 i.e. for add pagination support to your page.
+
+Default content page types
+==========================
+
+You can create default page content types objects for faster page creation.
+PageDefaultContent object have two fields:
+
+* ``name``: you can use any unique name for your default content set
+* ``content_types``: string with all content types you need, separated by colons.
+
+Example:
+
+.. code:: python
+
+  PageDefaultContent.create(
+     name = 'page_slug_meta_markdown',
+     content_types = 'slug:meta:markdown'
+  )
