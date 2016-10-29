@@ -11,10 +11,7 @@ class PageManager(TreeManager):
         """
         Ensures that this manager always returns nodes in tree order.
         """
-        if django.VERSION < (1, 7):
-            qs = TreeQuerySet(self.model, using=self._db)
-        else:
-            qs = super(TreeManager, self).get_queryset(*args, **kwargs)
+        qs = super(TreeManager, self).get_queryset(*args, **kwargs)
 
         # Restrict operations to pages on the current site if needed
         if settings.PAGES_HIDE_SITES and settings.PAGES_USE_SITE_ID:
