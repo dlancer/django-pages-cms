@@ -5,6 +5,7 @@ import importlib
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+
 from mptt.admin import MPTTModelAdmin
 from guardian.admin import GuardedModelAdmin
 
@@ -14,7 +15,6 @@ from pages.models import PageContent
 from pages.models import PageContentType
 from pages.admin import pagecontenttypes
 from pages.admin.pagecontent import PageContentInline
-
 
 PAGE_EXT_CONTENT_INLINES = []
 
@@ -43,26 +43,25 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
     mptt_indent_field = '__str__'
 
     page_fields = [
-        ('name', ),
-        ('ptype', ),
-        ('parent', ),
-        ('template', ),
+        ('name',),
+        ('ptype',),
+        ('parent',),
+        ('template',),
         ('default_content',),
     ]
 
     if hasattr(settings, 'SITE_ID'):
         if settings.PAGES_USE_SITE_ID:
-            page_fields.append(('sites', ))
+            page_fields.append(('sites',))
 
     fieldsets = [
         (None, {'fields': page_fields}),
 
-
         (_('State'), {'fields': [
             ('is_login_required', 'is_permission_required'),
             ('is_draft', 'is_approved', 'is_published'),
-            ('date_created', 'date_updated', 'date_approved', ),
-            ('date_publication', 'date_publication_end', ),
+            ('date_created', 'date_updated', 'date_approved',),
+            ('date_publication', 'date_publication_end',),
             ('comment',),
         ], 'classes': ['collapse']}),
     ]
@@ -70,11 +69,23 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
     def get_default_ptype(self):
         return 'page'
 
+    def get_default_parent(self):
+        try:
+            page = Page.objects.get(name=settings.PAGES_HOME_PAGE_SLUG)
+        except Page.DoesNotExist:
+            page = None
+        return page
+
+    def get_default_template(self):
+        return 'pages/page.html'
+
     def get_form(self, request, obj=None, **kwargs):
         # just save obj reference for future processing in Inline
         request._obj_ = obj
         form = super(PageAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['ptype'].initial = self.get_default_ptype()
+        form.base_fields['parent'].initial = self.get_default_parent()
+        form.base_fields['template'].initial = self.get_default_template()
         return form
 
     def get_all_content_inlines(self, object_id):
@@ -129,35 +140,42 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
     def make_draft(self, request, queryset):
         rows_updated = queryset.update(is_draft=True, is_approved=False, date_approved=None, is_published=False)
         self.message_user(request, _('{0} successfully marked as draft.').format(self.__get_message_bit(rows_updated)))
+
     make_draft.short_description = _('Mark selected pages as draft')
 
     def make_not_draft(self, request, queryset):
         rows_updated = queryset.update(is_draft=False)
-        self.message_user(request, _('{0} successfully marked as not draft.').format(self.__get_message_bit(rows_updated)))
+        self.message_user(request,
+                          _('{0} successfully marked as not draft.').format(self.__get_message_bit(rows_updated)))
+
     make_not_draft.short_description = _('Mark selected pages as not draft')
 
     def make_approved(self, request, queryset):
         rows_updated = queryset.update(is_approved=True, date_approved=timezone.now, is_draft=False)
         message = _('{0} successfully marked as approved.').format(self.__get_message_bit(rows_updated))
         self.message_user(request, message)
+
     make_approved.short_description = _('Mark selected pages as approved')
 
     def make_not_approved(self, request, queryset):
         rows_updated = queryset.update(is_approved=False, date_approved=None, is_published=False)
         message = _('{0} successfully marked as not approved.').format(self.__get_message_bit(rows_updated))
         self.message_user(request, message)
+
     make_not_approved.short_description = _('Mark selected pages as not approved')
 
     def make_published(self, request, queryset):
         rows_updated = queryset.update(is_published=True, is_draft=False)
         message = _('{0} successfully marked as piblished.').format(self.__get_message_bit(rows_updated))
         self.message_user(request, message)
+
     make_published.short_description = _('Mark selected pages as published')
 
     def make_not_published(self, request, queryset):
         rows_updated = queryset.update(is_published=False)
         message = _('{0} successfully marked as not published.').format(self.__get_message_bit(rows_updated))
         self.message_user(request, message)
+
     make_not_published.short_description = _('Mark selected pages as not published')
 
     def date_created_short(self, obj):
@@ -207,16 +225,18 @@ class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):
             obj.created_by = request.user
         obj.updated_by = request.user
         obj.save()
-        ctypes = obj.default_content.get_content_types()
-        for ctype in ctypes:
-            pctype = PageContentType.objects.get(type=ctype)
-            if pctype is not None:
-                try:
-                    PageContent.objects.get(page=obj, type__type=ctype)
-                except PageContent.DoesNotExist:
-                    PageContent.objects.create(
-                        page=obj,
-                        type=pctype
-                    )
+        if obj.default_content is not None:
+            ctypes = obj.default_content.get_content_types()
+            for ctype in ctypes:
+                pctype = PageContentType.objects.get(type=ctype)
+                if pctype is not None:
+                    try:
+                        PageContent.objects.get(page=obj, type__type=ctype)
+                    except PageContent.DoesNotExist:
+                        PageContent.objects.create(
+                            page=obj,
+                            type=pctype
+                        )
+
 
 admin.site.register(Page, PageAdmin)
