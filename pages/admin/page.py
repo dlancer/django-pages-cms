@@ -24,7 +24,8 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
             for inline in settings.PAGES_PAGE_EXT_CONTENT_INLINES:
                 PAGE_EXT_CONTENT_INLINES.append(importlib.import_module(inline))
         except ImportError as e:
-            raise Exception('Extended content type inline import error: {0}'.format(e))
+            from django.core.exceptions import ImproperlyConfigured
+            raise ImproperlyConfigured('Extended content type inline import error: {0}'.format(e))
 
 
 class PageAdmin(GuardedModelAdmin, MPTTModelAdmin):

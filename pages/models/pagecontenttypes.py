@@ -22,7 +22,8 @@ if settings.PAGES_PAGE_USE_EXT_CONTENT_TYPES:
             for content_type in settings.PAGES_PAGE_EXT_CONTENT_TYPES:
                 PAGE_EXT_CONTENT_TYPES.append(importlib.import_module(content_type))
         except ImportError as e:
-            raise Exception('Extended content type import error: {0}'.format(e))
+            from django.core.exceptions import ImproperlyConfigured
+            raise ImproperlyConfigured('Extended content type import error: {0}'.format(e))
 
 
 class PageSlugContent(PageBaseContent):
