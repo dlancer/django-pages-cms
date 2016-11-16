@@ -11,4 +11,5 @@ class PageContentTypeAdmin(admin.ModelAdmin):
     save_on_top = True
     actions_on_bottom = True
 
+
 admin.site.register(PageContentType, PageContentTypeAdmin)

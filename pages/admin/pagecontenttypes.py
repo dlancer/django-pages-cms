@@ -43,6 +43,7 @@ class PageRedirectContentAdmin(admin.ModelAdmin):
     save_on_top = True
     actions_on_bottom = True
 
+
 admin.site.register(PageRedirectContent, PageRedirectContentAdmin)
 
 
@@ -69,6 +70,7 @@ class PageMetaContentAdmin(admin.ModelAdmin):
     exclude = ['type', 'sid', 'is_extended', 'created_by', 'updated_by']
     save_on_top = True
     actions_on_bottom = True
+
 
 admin.site.register(PageMetaContent, PageMetaContentAdmin)
 
@@ -98,6 +100,7 @@ class PageTextContentAdmin(admin.ModelAdmin):
     save_on_top = True
     actions_on_bottom = True
 
+
 admin.site.register(PageTextContent, PageTextContentAdmin)
 
 
@@ -123,6 +126,7 @@ class PageMarkdownContentAdmin(admin.ModelAdmin):
     exclude = ('type', 'sid', 'is_extended', 'created_by', 'updated_by',)
     save_on_top = True
     actions_on_bottom = True
+
 
 admin.site.register(PageMarkdownContent, PageMarkdownContentAdmin)
 
