@@ -1,4 +1,4 @@
-VERSION = (0, 3, 0, 'dev')
+VERSION = (0, 3, 0, 'stable')
 
 
 def get_release():
@@ -10,6 +10,7 @@ def get_version():
     Returns only digit parts of version.
     """
     return '.'.join(str(i) for i in VERSION[:3])
+
 
 __author__ = 'dlancer'
 __docformat__ = 'restructuredtext en'
