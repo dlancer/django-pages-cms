@@ -121,7 +121,7 @@ class Page(MPTTModel):
             publication = self.date_publication < now < self.date_publication_end
         else:
             publication = self.date_publication < now
-        return not self.is_draft and not self.hidden and self.is_approved and publication
+        return not self.is_draft and not self.is_hidden and self.is_approved and publication
 
     def invalidate(self):
         content = self.get_content('slug')
