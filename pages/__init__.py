@@ -14,7 +14,7 @@ def get_version():
 
 __author__ = 'dlancer'
 __docformat__ = 'restructuredtext en'
-__copyright__ = 'Copyright 2014-2016, dlancer'
+__copyright__ = 'Copyright 2014-2018, dlancer'
 __license__ = 'BSD'
 __version__ = get_release()
 __maintainer__ = 'dlancer'
