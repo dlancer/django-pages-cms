@@ -8,7 +8,7 @@ from pages.conf import settings
 register = template.Library()
 
 
-@register.assignment_tag()
+@register.simple_tag()
 def get_page_object(objects, sid):
     """
     **Arguments**
@@ -30,7 +30,7 @@ def get_page_object(objects, sid):
     return selected_object
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_page_object_by_name(context, name):
     """
     **Arguments**
@@ -59,7 +59,7 @@ def get_page_object_by_name(context, name):
     return selected_object
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_page_object_by_id(context, object_type, oid):
     """
     **Arguments**
@@ -105,7 +105,7 @@ def get_page_object_by_id(context, object_type, oid):
     return selected_object
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_page_objects_by_type(context, object_type):
     """
     **Arguments**
@@ -122,7 +122,7 @@ def get_page_objects_by_type(context, object_type):
     return objects
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_page_objects_by_ext_type(context, object_type):
     """
     **Arguments**
@@ -152,12 +152,12 @@ def page_text_by_id(context, oid):
     return text
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_page_text_by_id(context, oid):
     return page_text_by_id(context, oid)
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_raw_page_text_by_id(context, oid):
     obj = get_page_object_by_id(context, 'text', oid)
     return obj.text if obj else None
@@ -171,7 +171,7 @@ def page_markdown_by_id(context, oid):
     return obj.text
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_page_markdown_by_id(context, oid):
     return page_markdown_by_id(context, oid)
 

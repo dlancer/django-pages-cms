@@ -1,17 +1,18 @@
 # -*- coding: utf-8
 from __future__ import unicode_literals
 from django.contrib.auth.models import AnonymousUser
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template import RequestContext
 from django.utils import translation
 
 from pages.cache import cache
 from pages.conf import settings
-from pages.tests.base import PagesCase
 from pages.models import PageSlugContent, PageMetaContent
 from pages.models import PageRedirectContent
 from pages.models import PageTextContent, PageMarkdownContent
 from pages.views import PageDetailsView
+
+from pages.tests.base import PagesCase
 
 
 class TestPages(PagesCase):
@@ -105,7 +106,7 @@ class TestPages(PagesCase):
         response = view(request=request, context=context, slug='test')
         translation.deactivate()
         self.assertEqual(response.status_code, 200)
-        page_cache_key = settings.PAGES_PAGE_CACHE_KEY + 'en' + ':' + 'test' + ':' + 'False'
+        page_cache_key = settings.PAGES_PAGE_CACHE_KEY + 'en' + ':' + 'test' + ':0'
         page_cache_version_key = settings.PAGES_PAGE_VERSION_KEY + 'en' + ':' + 'test'
         cache_version = cache.get(page_cache_version_key)
         page = cache.get(page_cache_key, version=cache_version)

@@ -1,26 +1,30 @@
+sudo: false
+
 language: python
-
-python:
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "2.7"
-
-env:
-  - DJANGO="django==1.8.16"
 
 matrix:
   include:
-    - python: "3.5"
-      env: DJANGO="django==1.9.11"
+    - python: 2.7
+      env: TOXENV=py27-1.11
+    - python: 3.4
+      env: TOXENV=py34-1.11
+    - python: 3.4
+      env: TOXENV=py34-2.0
+    - python: 3.5
+      env: TOXENV=py35-1.11
+    - python: 3.5
+      env: TOXENV=py35-2.0
+    - python: 3.6
+      env: TOXENV=py36-1.11
+    - python: 3.6
+      env: TOXENV=py36-2.0
 
 install:
-  - pip install $DJANGO
-  - pip install -e .
+  - pip install tox
   - pip install flake8
 
 before_script:
-  - flake8 --exclude=migrations --ignore=E501,E225,E128,E126,F401,F403 pages
-  - cd pages/tests
+  - flake8 --ignore=E501,E225,E128,E126,E402,F401,F403 pages
 
-script: python runtests.py
+script:
+  - tox

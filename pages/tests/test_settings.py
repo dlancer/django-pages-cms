@@ -10,7 +10,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'web/static')
 
 STATIC_URL = '/static/'
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'pages.tests.urls'
+
 SECRET_KEY = 'secretkey'
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -60,7 +61,7 @@ CACHES = {
     }
 }
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,14 +70,28 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware'
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.messages.context_processors.messages',
-)
-
 # Templates settings
-TEMPLATE_DIRS = tuple([os.path.join(BASE_DIR, app_name, 'templates') for app_name in INSTALLED_APPS])
-TEMPLATE_DIRS += tuple([os.path.join(BASE_DIR, 'templates')])
+TPL_DIRS = tuple([os.path.join(BASE_DIR, 'templates')])
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': TPL_DIRS,
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # django-guardian settings
 AUTHENTICATION_BACKENDS = (

@@ -12,7 +12,7 @@ You can install the latest stable package running this command::
 
 Also you can install the development version running this command::
 
-    $ pip install -e git+http://github.com/dlancer/django-pages-cms.git#egg=pages-dev
+    $ pip install git+http://github.com/dlancer/django-pages-cms.git@dev
 
 
 Setuptools

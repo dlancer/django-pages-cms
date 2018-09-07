@@ -8,22 +8,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
-# debug control
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-TEMPLATE_DEBUG = True
-CACHE_DEBUG = True
-SESSION_DEBUG = True
-DEBUG_TOOLBAR = True
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-from django.utils.translation import ugettext_lazy as _
-
 SITE_ID = 1
+
+# debug control
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+CACHE_DEBUG = True
+SESSION_DEBUG = True
+DEBUG_TOOLBAR = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -51,25 +49,6 @@ LANGUAGES = (
     ('ru', _('Russian')),
 )
 
-
-# List of callables that know how to import templates from various sources.
-if TEMPLATE_DEBUG:
-    TEMPLATE_LOADERS = (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-        'django.template.loaders.eggs.Loader',
-    )
-else:
-    # if debug disabled we use cached template loaders
-    TEMPLATE_LOADERS = (
-        ('django.template.loaders.cached.Loader', (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-            'django.template.loaders.eggs.Loader',
-        )),
-    )
-
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -84,10 +63,12 @@ INSTALLED_APPS = (
     'guardian',
     'markitup',
     'pages',
+#    'extpages',
+#    'embed_video',
 )
 
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -99,8 +80,28 @@ MIDDLEWARE_CLASSES = (
 
 
 # Templates settings
-TEMPLATE_DIRS = tuple([os.path.join(BASE_DIR, app_name, 'templates') for app_name in INSTALLED_APPS])
-TEMPLATE_DIRS += tuple([os.path.join(BASE_DIR, 'templates')])
+TPL_DIRS = tuple([os.path.join(BASE_DIR, 'templates')])
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': TPL_DIRS,
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'debug': DEBUG
+        },
+    },
+]
 
 ROOT_URLCONF = 'example_app.urls'
 
@@ -136,9 +137,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # this is default
     'guardian.backends.ObjectPermissionBackend',
 )
-
-ANONYMOUS_USER_ID = -1
-
 
 # MarkItUp settings
 MARKITUP_MEDIA_URL = STATIC_URL

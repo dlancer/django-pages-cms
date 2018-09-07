@@ -13,7 +13,7 @@ from django.utils import translation
 from django.utils.translation import get_language
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from guardian.shortcuts import get_perms
 from appcore.views.mixins import DecoratorChainingMixin
@@ -40,7 +40,7 @@ def get_timestamp(slug, language):
 
 
 def get_etag(request, **kwargs):
-    is_authenticated = str(request.user.is_authenticated())
+    is_authenticated = '1' if request.user.is_authenticated else '0'
     slug = kwargs.get('slug', None)
     language = get_language()
     modified = get_timestamp(slug, language)
@@ -60,7 +60,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                   condition(etag_func=get_etag, last_modified_func=get_last_modified)]
 
     def get(self, request, **kwargs):
-        is_authenticated = str(request.user.is_authenticated())
+        is_authenticated = '1' if request.user.is_authenticated else '0'
         slug = kwargs.get(settings.PAGES_PAGE_SLUG_NAME, None)
         if slug is None:
             raise Http404
@@ -89,7 +89,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
 
         if page:
             # check if login required
-            if page.is_login_required and not request.user.is_authenticated():
+            if page.is_login_required and not request.user.is_authenticated:
                 return HttpResponseRedirect(settings.LOGIN_URL)
 
             # check user view permission
@@ -141,7 +141,7 @@ class PageDetailsView(DecoratorChainingMixin, TemplateView):
                 cache.set(page_cache_key, page, settings.PAGES_PAGE_CACHE_TIMEOUT, version=cache_version)
 
                 # check if login required
-                if page.is_login_required and not request.user.is_authenticated():
+                if page.is_login_required and not request.user.is_authenticated:
                     return HttpResponseRedirect(settings.LOGIN_URL)
 
                 # check user view permission

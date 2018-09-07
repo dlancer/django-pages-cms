@@ -9,7 +9,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import iri_to_uri
@@ -33,17 +33,18 @@ from pages.models import pagecontenttypes
 class Page(MPTTModel):
     name = models.CharField(max_length=200, unique=True)
     ptype = models.CharField(_('Type'), max_length=64, default='page')
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='children')
     template = models.CharField(max_length=254, blank=True)
     default_content = models.ForeignKey(
         PageDefaultContent,
         related_name='page_default_content',
+        on_delete=models.CASCADE,
         null=True,
         blank=True
     )
     comment = models.TextField(max_length=254, blank=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_creator', null=True)
-    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_editor', null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_creator', null=True, on_delete=models.CASCADE)
+    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='page_editor', null=True, on_delete=models.CASCADE)
     date_created = models.DateTimeField(_('Created'), default=timezone.now)
     date_updated = models.DateTimeField(_('Updated'), default=timezone.now)
     date_approved = models.DateTimeField(_('Approved'), null=True, blank=True)
@@ -207,7 +208,7 @@ def on_delete(sender, instance, using, **kwargs):
 
 
 class PageUserObjectPermission(UserObjectPermissionBase):
-    content_object = models.ForeignKey(Page)
+    content_object = models.ForeignKey(Page, on_delete=models.CASCADE)
 
     class Meta:
         app_label = 'pages'
@@ -216,7 +217,7 @@ class PageUserObjectPermission(UserObjectPermissionBase):
 
 
 class PageGroupObjectPermission(GroupObjectPermissionBase):
-    content_object = models.ForeignKey(Page)
+    content_object = models.ForeignKey(Page, on_delete=models.CASCADE)
 
     class Meta:
         app_label = 'pages'

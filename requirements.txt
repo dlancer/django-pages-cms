@@ -1,4 +1,4 @@
-Django>=1.11.15,<2.0
+Django>=1.11.15,<2.1
 django-appcore>=0.0.9
 django-mptt>=0.9.1
 django-guardian>=1.4.9

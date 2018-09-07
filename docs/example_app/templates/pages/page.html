@@ -16,7 +16,7 @@
 <body>
 
 {% cache page.timeout "pages" page.cache_key page.cache_version %}
-    {% page_text_by_id 1 %}
+    {% page_markdown_by_id 1 %}
     {% get_page_video_by_id 1 as item %}
     {% video item.video as example_video %}
         URL: {{ example_video.url }}

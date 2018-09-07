@@ -30,9 +30,9 @@ class Migration(migrations.Migration):
                 ('video', embed_video.fields.EmbedVideoField(blank=True)),
                 ('title', models.CharField(max_length=160, blank=True)),
                 ('description', models.TextField(max_length=160, blank=True)),
-                ('created_by', models.ForeignKey(related_name='extpages_pagevideocontent_creator', to=settings.AUTH_USER_MODEL, null=True)),
-                ('page', models.ForeignKey(verbose_name='Page', to='pages.Page')),
-                ('updated_by', models.ForeignKey(related_name='extpages_pagevideocontent_editor', to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', models.ForeignKey(related_name='extpages_pagevideocontent_creator', on_delete=models.CASCADE, to=settings.AUTH_USER_MODEL, null=True)),
+                ('page', models.ForeignKey(verbose_name='Page', to='pages.Page', on_delete=models.CASCADE)),
+                ('updated_by', models.ForeignKey(related_name='extpages_pagevideocontent_editor', on_delete=models.CASCADE, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'abstract': False,

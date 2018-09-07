@@ -32,15 +32,11 @@ After database creation you must load standard content types to database from pr
     $ python manage.py loaddata content_types
 
 
-Database migration
-------------------
 
-Django 1.7+ has native database migration support.
-
-Django 1.10+ support
+Django 2.1+ support
 --------------------
 
-Django 1.10+ not supported at the moment
+Django 2.1+ not supported at the moment
 
 Multilingual support
 --------------------
@@ -107,7 +103,7 @@ you should setup these options in your Django project settings:
 
 You also should add your extended content types to PageContentType table.
 
-You may use embed video content type realisation in example project. You may find it in the docs/example_app directory.
+You may use embed video content type realisation from example project. You may find it in the docs/example_app directory.
 You also can use ``django-pages-cms-extensions`` application as full tutorial.
 You can find ``django-pages-cms-extensions`` here: http://github.com/dlancer/django-pages-cms-extensions
 

@@ -14,7 +14,7 @@ from pages.models.pagecontenttype import get_all_content_tuple
 @python_2_unicode_compatible
 class PageBaseContent(models.Model):
     type = models.CharField(_('Type'), choices=get_all_content_tuple(), max_length=100, blank=False, db_index=True)
-    page = models.ForeignKey('pages.Page', verbose_name=_('Page'))
+    page = models.ForeignKey('pages.Page', verbose_name=_('Page'), on_delete=models.CASCADE)
     language = models.CharField(max_length=5, default=str(settings.PAGES_DEFAULT_LANGUAGE))
     sid = models.CharField(max_length=200, unique=True)
     name = models.CharField(max_length=200, blank=True, unique=True)
@@ -23,10 +23,10 @@ class PageBaseContent(models.Model):
     date_created = models.DateTimeField(_('Created'), default=timezone.now)
     date_updated = models.DateTimeField(_('Updated'), default=timezone.now)
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_creator', null=True
+        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_creator', null=True, on_delete=models.CASCADE
     )
     updated_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_editor', null=True
+        settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_editor', null=True, on_delete=models.CASCADE
     )
 
     def __str__(self):
